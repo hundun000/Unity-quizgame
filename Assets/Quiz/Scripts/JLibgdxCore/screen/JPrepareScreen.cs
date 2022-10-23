@@ -35,7 +35,23 @@ public class JPrepareScreen : MonoBehaviour,
 
     void IMatchStrategyChangeListener.onMatchStrategyChange(MatchStrategyType newType)
     {
-        throw new NotImplementedException();
+        this.currenType = newType;
+
+        if (currenType == MatchStrategyType.PRE)
+        {
+            targetTeamNum = 1;
+        }
+        else if (currenType == MatchStrategyType.MAIN)
+        {
+            targetTeamNum = 2;
+        }
+        else
+        {
+            Debug.Log(typeof(JPrepareScreen).Name + ": " + "onChange cannot handle type: " + currenType);
+        }
+
+        matchStrategyInfoVM.updateStrategy(currenType);
+        teamManageAreaVM.updateSlotNum(targetTeamNum);
     }
 
     void Awake()
@@ -51,8 +67,8 @@ public class JPrepareScreen : MonoBehaviour,
         //teamSelectPopoupVM = _teamSelectPopoupVM.GetComponent<JTeamSelectPopoupVM>();
         //tagSelectPopoupVM = _tagSelectPopoupVM.GetComponent<JTagSelectPopoupVM>();
         matchStrategySelectVM = _matchStrategySelectVM.GetComponent<JMatchStrategySelectVM>();
-        //teamManageAreaVM = _teamManageAreaVM.GetComponent<JTeamManageAreaVM>();
-        //matchStrategyInfoVM = _matchStrategyInfoVM.GetComponent<JMatchStrategyInfoVM>();
+        teamManageAreaVM = _teamManageAreaVM.GetComponent<JTeamManageAreaVM>();
+        matchStrategyInfoVM = _matchStrategyInfoVM.GetComponent<JMatchStrategyInfoVM>();
         toPlayScreenButtonVM = _toPlayScreenButtonVM.GetComponent<JToPlayScreenButtonVM>();
         toMenuScreenButtonVM = _toMenuScreenButtonVM.GetComponent<JToMenuScreenButtonVM>();
     }

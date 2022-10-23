@@ -1,4 +1,5 @@
 using hundun.quizlib.prototype.match;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,25 +8,50 @@ using UnityEngine.UI;
 public class JMatchStrategyNode : MonoBehaviour
 {
 
-    private MatchStrategyType type;
-    Text m_NameLabel;
+    internal MatchStrategyType type;
 
+    internal static int SIGN_SIZE = 50;
+    internal Sprite signDrawable;
+    internal static int NAME_WIDTH = 200;
+
+    internal Text _nameLabel;
+    internal Image _signSlotImage;
 
     // Start is called before the first frame update
     void Awake()
     {
-        this.m_NameLabel = this.gameObject.transform.Find("text").GetComponent<Text>();
+        this._nameLabel = this.transform.Find("_nameLabel").GetComponent<Text>();
+        this._signSlotImage = this.transform.Find("_signSlotImage").GetComponent<Image>();
+        this.signDrawable = TextureConfig.getPlayScreenUITextureAtlas_findRegion(TextureAtlasKeys.pLAYSCREEN_CURRENTTEAMSIGN_BLACK);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //var rectTransform = this.GetComponent<RectTransform>();
+        //rectTransform.sizeDelta = new Vector2(NAME_WIDTH - rectTransform.rect.width, SIGN_SIZE - rectTransform.rect.height);
     }
 
-    internal void updatePrototypeAKASetCharacterData(MatchStrategyType type)
+    internal void postPrefabInitialization(JMatchStrategySelectVM parent)
+    {
+        this.GetComponent<Button>().onClick.AddListener(() => parent.checkSlotNum(this.type));
+    }
+
+    internal void updatePrototype(MatchStrategyType type)
     {
         this.type = type;
-        m_NameLabel.text = (JMatchStrategyInfoVM.toMatchStrategyTypeChinese(type));
+        _nameLabel.text = (JMatchStrategyInfoVM.toMatchStrategyTypeChinese(type));
+    }
+
+    internal void updateRuntime(bool isCurrent)
+    {
+        if (isCurrent)
+        {
+            _signSlotImage.sprite = (signDrawable);
+        }
+        else
+        {
+            _signSlotImage.sprite = (null);
+        }
     }
 }

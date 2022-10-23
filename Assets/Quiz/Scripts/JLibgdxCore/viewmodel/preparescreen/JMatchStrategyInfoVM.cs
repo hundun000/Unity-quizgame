@@ -19,6 +19,11 @@ public class JMatchStrategyInfoVM : MonoBehaviour
         }
     }
 
+    internal void updateStrategy(MatchStrategyType currenType)
+    {
+        // TODO
+    }
+
     // Start is called before the first frame update
     void Start()
     {
