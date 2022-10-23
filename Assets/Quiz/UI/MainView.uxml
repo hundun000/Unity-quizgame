@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement name="background" style="height: auto; width: auto;">
+        <ui:VisualElement name="main-container" style="flex-direction: row;">
+            <ui:VisualElement name="main-left" style="height: auto; width: 1000px;">
+                <ui:VisualElement name="team-list" style="height: 600px;" />
+                <ui:ListView focusable="true" name="character-list" fixed-item-height="50" style="height: 200px; width: auto; flex-direction: column; flex-shrink: 1; flex-grow: 0;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="main-right" style="height: 800px; width: 600px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -17,15 +17,14 @@ public class JMatchStrategySelectVM : MonoBehaviour
 
     // --- fake table ---
     //private UnityEngine.UI.Image _imageComponent;
-    private VisualElement m_Root;
-    private VisualElement m_SlotContainer;
-
+    VisualTreeAsset m_ListEntryTemplate;
+    ListView m_CharacterList;
 
     // --- java ----
     JQuizGdxGame game;
 
     MatchStrategyType currentType;
-    List<MatchStrategyNode> nodes = new List<MatchStrategyNode>();
+    //List<MatchStrategyNode> nodes = new List<MatchStrategyNode>();
 
 
     IMatchStrategyChangeListener slotNumListener;
@@ -33,19 +32,13 @@ public class JMatchStrategySelectVM : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // --- fake table ---
-        //this._imageComponent = this.GetComponent<UnityEngine.UI.Image>();
-        m_Root = GetComponent<UIDocument>().rootVisualElement;
-        m_SlotContainer = m_Root.Q<VisualElement>("SlotContainer");
-
-
         // --- java ---
 
         //this.game = _game.GetComponent<JQuizGdxGame>();
         //this.slotNumListener = _game.GetComponent<JPrepareScreen>();
         //this._imageComponent.sprite = Resources.Load<Sprite>("Quiz/testNinePatch");
 
-        initUI(JavaFeatureExtension.ArraysAsList(MatchStrategyType.PRE, MatchStrategyType.MAIN));
+        
     }
 
     // Update is called once per frame
@@ -54,17 +47,28 @@ public class JMatchStrategySelectVM : MonoBehaviour
         
     }
 
-    private void initUI(List<MatchStrategyType> teamPrototypes)
+    private void initUI(List<MatchStrategyType> teamPrototypesAKAm_AllCharacters)
     {
 
-        nodes.Clear();
-        teamPrototypes.ForEach(it => {
-            MatchStrategyNode vm = new MatchStrategyNode();
-            vm.updatePrototype(it);
-            nodes.Add(vm);
+        //nodes.Clear();
 
-            m_SlotContainer.Add(vm);
-        });
+        m_CharacterList.makeItem = () =>
+        {
+            var newListEntry = m_ListEntryTemplate.Instantiate();
+            MatchStrategyNode vm = new MatchStrategyNode();
+            newListEntry.userData = vm;
+            vm.SetVisualElement(newListEntry);
+            //nodes.Add(vm);
+            return newListEntry;
+        };
+
+        m_CharacterList.bindItem = (item, index) =>
+        {
+            var vm = (item.userData as MatchStrategyNode);
+            vm.updatePrototypeAKASetCharacterData(teamPrototypesAKAm_AllCharacters[index]);
+        };
+
+        m_CharacterList.itemsSource = teamPrototypesAKAm_AllCharacters;
     }
 
     public void checkSlotNum(MatchStrategyType newType)
@@ -76,28 +80,34 @@ public class JMatchStrategySelectVM : MonoBehaviour
             // FIXME
             //slotNumListener.onMatchStrategyChange(newType);
         }
-        for (int i = 0; i < nodes.Count; i++)
-        {
-            MatchStrategyNode vm = nodes.get(i);
-            vm.updateRuntime(vm.type == currentType);
-        }
+        //for (int i = 0; i < nodes.Count; i++)
+        //{
+        //    MatchStrategyNode vm = nodes.get(i);
+        //    vm.updateRuntime(vm.type == currentType);
+        //}
     }
 
+    internal void InitializeCharacterList(VisualElement root, VisualTreeAsset listEntryTemplate)
+    {
+        this.m_ListEntryTemplate = listEntryTemplate;
 
+        this.m_CharacterList = root.Q<ListView>("character-list");
+
+        initUI(JavaFeatureExtension.ArraysAsList(MatchStrategyType.PRE, MatchStrategyType.MAIN));
+    }
 
     public interface IMatchStrategyChangeListener
     {
         void onMatchStrategyChange(MatchStrategyType newType);
     }
 
-    private class MatchStrategyNode : VisualElement
+    private class MatchStrategyNode
     {
         // --- unity ---
-        public UnityEngine.UIElements.Image Icon;
-        public string ItemGuid = "";
+        Label m_NameLabel;
 
         // --- java ---
-        int SIGN_SIZE = 50;
+        internal static int SIGN_SIZE = 50;
         internal UnityEngine.UIElements.Image signSlotImage;
         internal Sprite signDrawable;
         internal int NAME_WIDTH = 200;
@@ -107,23 +117,19 @@ public class JMatchStrategySelectVM : MonoBehaviour
 
         public MatchStrategyNode()
         {
-            //Create a new Image element and add it to the root
-            Icon = new UnityEngine.UIElements.Image();
-            Add(Icon);
 
-            //Add USS style properties to the elements
-            Icon.AddToClassList("slotIcon");
-            AddToClassList("slotContainer");
-
-            //Register event listeners
-            //RegisterCallback<PointerDownEvent>(OnPointerDown);
-            this.Icon.sprite = Resources.Load<Sprite>("Quiz/playScreenUI/systemButton");
         }
 
-        internal void updatePrototype(MatchStrategyType type)
+
+        public void SetVisualElement(VisualElement visualElement)
+        {
+            m_NameLabel = visualElement.Q<Label>("character-name");
+        }
+
+        internal void updatePrototypeAKASetCharacterData(MatchStrategyType type)
         {
             this.type = type;
-            //nameLabel.text = (JMatchStrategyInfoVM.toMatchStrategyTypeChinese(type));
+            m_NameLabel.text = (JMatchStrategyInfoVM.toMatchStrategyTypeChinese(type));
         }
 
         internal void updateRuntime(bool isCurrent)

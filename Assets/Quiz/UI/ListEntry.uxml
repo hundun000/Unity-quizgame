@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/Quiz/UI/ListEntry.uss?fileID=7433441132597879392&amp;guid=212f106b929b11f46b2be56d1e5b81c5&amp;type=3#ListEntry" />
+    <ui:VisualElement name="list-entry" style="width: auto; height: auto;">
+        <ui:Label text="Label" display-tooltip-when-elided="true" name="character-name" />
+    </ui:VisualElement>
+</ui:UXML>

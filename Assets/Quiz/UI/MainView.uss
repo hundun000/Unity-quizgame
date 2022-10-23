@@ -1,0 +1,20 @@
+    #background {
+        flex-grow: 1;
+        align-items: center;
+        justify-content: center;
+        background-color: rgb(115, 37, 38);
+    }
+
+    #main-container {
+        flex-direction: row;
+        height: 350px;
+    }
+
+    #character-list {
+        width: 230px;
+        border-color: rgb(49, 26, 17);
+        border-width: 4px;
+        background-color: rgb(110, 57, 37);
+        border-radius: 15px;
+        margin-right: 6px;
+    }
