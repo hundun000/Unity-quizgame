@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class JToPlayScreenButtonVM : MonoBehaviour
@@ -33,7 +34,7 @@ public class JToPlayScreenButtonVM : MonoBehaviour
     public void JOnClick() 
     {
         // TODO temp
-        JsetTouchable(!this.touchable);
+        SceneManager.LoadScene("PlayScene");
     }
 
     public void JsetTouchable(bool touchable) 

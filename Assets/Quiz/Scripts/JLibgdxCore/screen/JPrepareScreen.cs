@@ -9,7 +9,7 @@ public class JPrepareScreen : MonoBehaviour
 {
     private const String ownerName = "PrepareScene";
 
-    private GameObject _JToPlayScreenButtonVM;
+    private GameObject _toPlayScreenButtonVM;
 
     
 
@@ -24,7 +24,7 @@ public class JPrepareScreen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _JToPlayScreenButtonVM = GameObject.Find("_JToPlayScreenButtonVM");
+        _toPlayScreenButtonVM = GameObject.Find("_ToPlayScreenButtonVM");
 
         SceneManager.activeSceneChanged += ChangedActiveScene;
     }
@@ -37,7 +37,7 @@ public class JPrepareScreen : MonoBehaviour
 
     public void Jshow()
     {
-        _JToPlayScreenButtonVM.GetComponent<JToPlayScreenButtonVM>().JsetTouchable(true);
+        _toPlayScreenButtonVM.GetComponent<JToPlayScreenButtonVM>().JsetTouchable(true);
     }
 }
 
