@@ -5,14 +5,23 @@ using UnityEngine.UI;
 
 public class JToPlayScreenButtonVM : MonoBehaviour
 {
-
-    public RawImage enableDrawable;
-    public RawImage disableDrawable;
+    private Image _imageComponent;
+    
+    private Sprite enableDrawable;
+    private Sprite disableDrawable;
+    private bool touchable;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        _imageComponent = this.GetComponent<Image>();
+
+        enableDrawable = Resources.Load<Sprite>("Quiz/playScreenUI/systemButton");
+        disableDrawable = Resources.Load<Sprite>("Quiz/playScreenUI/skillButtonUseOut");
+
+        //JsetTouchable(true);
+        Button button = this.GetComponent<Button>();
+        button.onClick.AddListener(JOnClick);
     }
 
     // Update is called once per frame
@@ -23,6 +32,20 @@ public class JToPlayScreenButtonVM : MonoBehaviour
 
     public void JOnClick() 
     {
+        // TODO temp
+        JsetTouchable(!this.touchable);
+    }
 
+    public void JsetTouchable(bool touchable) 
+    {
+        this.touchable = touchable;
+        if (touchable)
+        {
+            _imageComponent.sprite = enableDrawable;
+        } 
+        else
+        {
+            _imageComponent.sprite = disableDrawable;
+        }
     }
 }
