@@ -84,6 +84,9 @@ public class JPrepareScreen : BaseHundunScreen,
         matchStrategySelectVM.checkSlotNum(MatchStrategyType.PRE);
         validateMatchConfig();
 
+
+        // temp when as first scece
+        game.gameLoadOrNew(false);
     }
 
     private void validateMatchConfig()

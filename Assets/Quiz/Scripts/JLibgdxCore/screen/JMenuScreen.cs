@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class JMenuScreen : BaseHundunScreen
 {
@@ -9,10 +11,9 @@ public class JMenuScreen : BaseHundunScreen
     int BUTTON_SMALL_HEIGHT = 75;
 
     GameObject _title;
-    GameObject _buttonContinueGame;
-    GameObject _buttonNewGame;
-    GameObject _buttonHistorySreen;
-    GameObject _backImage;
+    GameObject _buttonContinueGamePrefab;
+    GameObject _buttonNewGamePrefab;
+    GameObject _buttonHistorySreenPrefab;
 
     // ------ unity adapter member ------
     protected GameObject _buttonAreaRoot;
@@ -23,24 +24,27 @@ public class JMenuScreen : BaseHundunScreen
         base.Awake();
 
         this._buttonAreaRoot = _uiRoot.transform.Find("_buttonAreaRoot").gameObject;
+        this._title = _uiRoot.transform.Find("_title").gameObject;
+        this._buttonContinueGamePrefab = _templates.transform.Find("_buttonAreaRoot").gameObject;
+        this._buttonNewGamePrefab = _templates.transform.Find("_buttonAreaRoot").gameObject;
+        this._buttonHistorySreenPrefab = _templates.transform.Find("_buttonAreaRoot").gameObject;
+
+
+        _buttonContinueGamePrefab.GetComponent<Button>().onClick.AddListener(() => {
+            game.gameLoadOrNew(true);
+            SceneManager.LoadScene("PrepareScene");
+        });
+
+        _buttonNewGamePrefab.GetComponent<Button>().onClick.AddListener(() => {
+            game.gameLoadOrNew(false);
+            SceneManager.LoadScene("PrepareScene");
+        });
+
+        _buttonHistorySreenPrefab.GetComponent<Button>().onClick.AddListener(() => {
+            game.gameLoadOrNew(false);
+            SceneManager.LoadScene("HistoryScene");
+        });
     }
-
-
-    //    public StarterMenuScreen(T_GAME game, 
-    //            Actor title,
-    //            Image backImage,
-    //            Actor buttonContinueGame,
-    //            Actor buttonNewGame,
-    //            Actor buttonIntoSettingScreen
-    //            ) {
-    //        super(game);
-    //        this.backImage = backImage;
-    //        this.buttonContinueGame = buttonContinueGame;
-    //        this.buttonNewGame = buttonNewGame;
-    //        this.buttonIntoSettingScreen = buttonIntoSettingScreen;
-    //        
-    //
-    //    }
 
     private void initScene2d()
     {
@@ -49,14 +53,16 @@ public class JMenuScreen : BaseHundunScreen
 
         if (game.gameHasSave())
         {
-            // TODO
+            _buttonAreaRoot.transform.AsTableAdd<GameObject>(_buttonContinueGamePrefab);
         }
-
+        _buttonAreaRoot.transform.AsTableAdd<GameObject>(_buttonNewGamePrefab);
+        _buttonAreaRoot.transform.AsTableAdd<GameObject>(_buttonHistorySreenPrefab);
     }
 
-
-    void Start()
+    override protected void Start()
     {
+        base.Start();
+
         initScene2d();
     }
 }
