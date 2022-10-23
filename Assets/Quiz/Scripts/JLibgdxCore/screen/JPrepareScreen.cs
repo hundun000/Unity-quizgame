@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static JMatchStrategySelectVM;
 
-public class JPrepareScreen : MonoBehaviour
+public class JPrepareScreen : MonoBehaviour,
+    IMatchStrategyChangeListener
 {
     private const String ownerName = "PrepareScene";
 
@@ -23,14 +25,42 @@ public class JPrepareScreen : MonoBehaviour
     private GameObject _toPlayScreenButtonVM;
     private GameObject _toMenuScreenButtonVM;
 
+    private JTeamSelectPopoupVM teamSelectPopoupVM;
+    private JTagSelectPopoupVM tagSelectPopoupVM;
+    private JMatchStrategySelectVM matchStrategySelectVM;
+    private JTeamManageAreaVM teamManageAreaVM;
+    private JMatchStrategyInfoVM matchStrategyInfoVM;
+    private JToPlayScreenButtonVM toPlayScreenButtonVM;
+    private JToMenuScreenButtonVM toMenuScreenButtonVM;
 
+    void IMatchStrategyChangeListener.onMatchStrategyChange(MatchStrategyType newType)
+    {
+        throw new NotImplementedException();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        _toPlayScreenButtonVM = GameObject.Find("_ToPlayScreenButtonVM");
+        _teamSelectPopoupVM = GameObject.Find("_teamSelectPopoupVM");
+        _tagSelectPopoupVM = GameObject.Find("_tagSelectPopoupVM");
+        _matchStrategySelectVM = GameObject.Find("_matchStrategySelectVM");
+        _teamManageAreaVM = GameObject.Find("_teamManageAreaVM");
+        _matchStrategyInfoVM = GameObject.Find("_matchStrategyInfoVM");
+        _toPlayScreenButtonVM = GameObject.Find("_toPlayScreenButtonVM");
+        _toMenuScreenButtonVM = GameObject.Find("_toMenuScreenButtonVM");
+
+        //teamSelectPopoupVM = _teamSelectPopoupVM.GetComponent<JTeamSelectPopoupVM>();
+        //tagSelectPopoupVM = _tagSelectPopoupVM.GetComponent<JTagSelectPopoupVM>();
+        matchStrategySelectVM = _matchStrategySelectVM.GetComponent<JMatchStrategySelectVM>();
+        //teamManageAreaVM = _teamManageAreaVM.GetComponent<JTeamManageAreaVM>();
+        //matchStrategyInfoVM = _matchStrategyInfoVM.GetComponent<JMatchStrategyInfoVM>();
+        toPlayScreenButtonVM = _toPlayScreenButtonVM.GetComponent<JToPlayScreenButtonVM>();
+        toMenuScreenButtonVM = _toMenuScreenButtonVM.GetComponent<JToMenuScreenButtonVM>();
 
 
+        // ------ post vm init ------ 
+        matchStrategySelectVM.checkSlotNum(MatchStrategyType.PRE);
+        validateMatchConfig();
     }
 
     // Update is called once per frame
