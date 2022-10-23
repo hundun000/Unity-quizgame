@@ -1,3 +1,4 @@
+using hundun.quizlib.prototype.match;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,24 +10,27 @@ public class JPrepareScreen : MonoBehaviour
 {
     private const String ownerName = "PrepareScene";
 
+    MatchStrategyType currenType;
+    int targetTeamNum;
+    String currentQuestionPackageName;
+    List<String> selectedTeamNames;
+
+    private GameObject _teamSelectPopoupVM;
+    private GameObject _tagSelectPopoupVM;
+    private GameObject _matchStrategySelectVM;
+    private GameObject _teamManageAreaVM;
+    private GameObject _matchStrategyInfoVM;
     private GameObject _toPlayScreenButtonVM;
+    private GameObject _toMenuScreenButtonVM;
 
-    
 
-    private void ChangedActiveScene(Scene current, Scene next)
-    {
-        if (current.name == ownerName)
-        {
-            Jshow();
-        }
-    }
 
     // Start is called before the first frame update
     void Start()
     {
         _toPlayScreenButtonVM = GameObject.Find("_ToPlayScreenButtonVM");
 
-        SceneManager.activeSceneChanged += ChangedActiveScene;
+
     }
 
     // Update is called once per frame
@@ -35,9 +39,16 @@ public class JPrepareScreen : MonoBehaviour
 
     }
 
-    public void Jshow()
+    private void validateMatchConfig()
     {
-        _toPlayScreenButtonVM.GetComponent<JToPlayScreenButtonVM>().JsetTouchable(true);
+        if (selectedTeamNames != null && selectedTeamNames.Count == targetTeamNum)
+        {
+            _toPlayScreenButtonVM.GetComponent<JToPlayScreenButtonVM>().JsetTouchable(true);
+        }
+        else
+        {
+            _toPlayScreenButtonVM.GetComponent<JToPlayScreenButtonVM>().JsetTouchable(false);
+        }
     }
 }
 
