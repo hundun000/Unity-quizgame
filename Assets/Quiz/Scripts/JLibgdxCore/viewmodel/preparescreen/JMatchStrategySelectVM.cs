@@ -14,6 +14,7 @@ public class JMatchStrategySelectVM : MonoBehaviour
 {
     // --- unity editor bind ----
     GameObject _game;
+    public GameObject myPrefab;
 
     // --- fake table ---
     //private UnityEngine.UI.Image _imageComponent;
@@ -38,7 +39,7 @@ public class JMatchStrategySelectVM : MonoBehaviour
         //this.slotNumListener = _game.GetComponent<JPrepareScreen>();
         //this._imageComponent.sprite = Resources.Load<Sprite>("Quiz/testNinePatch");
 
-        
+        initUI(JavaFeatureExtension.ArraysAsList(MatchStrategyType.PRE, MatchStrategyType.MAIN));
     }
 
     // Update is called once per frame
@@ -47,28 +48,19 @@ public class JMatchStrategySelectVM : MonoBehaviour
         
     }
 
-    private void initUI(List<MatchStrategyType> teamPrototypesAKAm_AllCharacters)
+    private void initUI(List<MatchStrategyType> teamPrototypes)
     {
 
         //nodes.Clear();
-
-        m_CharacterList.makeItem = () =>
-        {
-            var newListEntry = m_ListEntryTemplate.Instantiate();
-            MatchStrategyNode vm = new MatchStrategyNode();
-            newListEntry.userData = vm;
-            vm.SetVisualElement(newListEntry);
-            //nodes.Add(vm);
-            return newListEntry;
-        };
-
-        m_CharacterList.bindItem = (item, index) =>
-        {
-            var vm = (item.userData as MatchStrategyNode);
-            vm.updatePrototypeAKASetCharacterData(teamPrototypesAKAm_AllCharacters[index]);
-        };
-
-        m_CharacterList.itemsSource = teamPrototypesAKAm_AllCharacters;
+        float currentY = this.transform.position.y;
+        teamPrototypes.ForEach(it => {
+            
+            GameObject nodeInstance = Instantiate(myPrefab, new Vector3(this.transform.position.x, currentY, this.transform.position.z), Quaternion.identity);
+            nodeInstance.GetComponent<JMatchStrategyNode>().updatePrototypeAKASetCharacterData(it);
+            nodeInstance.transform.SetParent(this.transform);
+            currentY += 50;
+        });
+        
     }
 
     public void checkSlotNum(MatchStrategyType newType)
@@ -93,7 +85,25 @@ public class JMatchStrategySelectVM : MonoBehaviour
 
         this.m_CharacterList = root.Q<ListView>("character-list");
 
-        initUI(JavaFeatureExtension.ArraysAsList(MatchStrategyType.PRE, MatchStrategyType.MAIN));
+        var teamPrototypesAKAm_AllCharacters = JavaFeatureExtension.ArraysAsList(MatchStrategyType.PRE, MatchStrategyType.MAIN);
+
+        m_CharacterList.makeItem = () =>
+        {
+            var newListEntry = m_ListEntryTemplate.Instantiate();
+            MatchStrategyNode vm = new MatchStrategyNode();
+            newListEntry.userData = vm;
+            vm.SetVisualElement(newListEntry);
+            //nodes.Add(vm);
+            return newListEntry;
+        };
+
+        m_CharacterList.bindItem = (item, index) =>
+        {
+            var vm = (item.userData as MatchStrategyNode);
+            vm.updatePrototypeAKASetCharacterData(teamPrototypesAKAm_AllCharacters[index]);
+        };
+
+        m_CharacterList.itemsSource = teamPrototypesAKAm_AllCharacters;
     }
 
     public interface IMatchStrategyChangeListener

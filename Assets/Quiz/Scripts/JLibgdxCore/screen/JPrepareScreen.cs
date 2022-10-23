@@ -38,8 +38,7 @@ public class JPrepareScreen : MonoBehaviour,
         throw new NotImplementedException();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         _teamSelectPopoupVM = GameObject.Find("_teamSelectPopoupVM");
         _tagSelectPopoupVM = GameObject.Find("_tagSelectPopoupVM");
@@ -56,6 +55,12 @@ public class JPrepareScreen : MonoBehaviour,
         //matchStrategyInfoVM = _matchStrategyInfoVM.GetComponent<JMatchStrategyInfoVM>();
         toPlayScreenButtonVM = _toPlayScreenButtonVM.GetComponent<JToPlayScreenButtonVM>();
         toMenuScreenButtonVM = _toMenuScreenButtonVM.GetComponent<JToMenuScreenButtonVM>();
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+
 
 
         // ------ post vm init ------ 

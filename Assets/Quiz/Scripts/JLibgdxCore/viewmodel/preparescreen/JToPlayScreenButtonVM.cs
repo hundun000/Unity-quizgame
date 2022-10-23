@@ -13,7 +13,7 @@ public class JToPlayScreenButtonVM : MonoBehaviour
     private bool touchable;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         _imageComponent = this.GetComponent<Image>();
 
