@@ -21,10 +21,14 @@ namespace hundun.quizlib.service
         public static String TEST_PACKAGE_NAME = "questions_test";
         public static String TEST_SMALL_PACKAGE_NAME = "questions_test_small";
         public static String FOLDER_CHILD_HINT_FILE_NAME = "list.txt";
+        public static String FOLDER_CHILD_HINT_FILE_NAME_WITHOUT_EXTEND = "list";
 
         public const String TAGS_SPLIT = ";";
 
         IFrontEnd frontEnd;
+
+        // FEFF because this is the Unicode char represented by the UTF-8 byte order mark (EF BB BF).
+        public static readonly char UTF8_BOM = '\uFEFF';
 
         public void postConstruct(QuizComponentContext context)
         {
@@ -59,7 +63,7 @@ namespace hundun.quizlib.service
             foreach (String chileName in chileNames)
             {
                 String fileContent = frontEnd.fileGetContent(PACKAGE_FOLDER + packageName + Path.DirectorySeparatorChar + chileName);
-                questions.addAll(loadQuestionsFromFile(fileContent, chileName));
+                questions.AddRange(loadQuestionsFromFile(fileContent, chileName));
             }
             return questions;
         }
@@ -67,8 +71,7 @@ namespace hundun.quizlib.service
 
 
 
-        // FEFF because this is the Unicode char represented by the UTF-8 byte order mark (EF BB BF).
-        public const String UTF8_BOM = "\uFEFF";
+        
         /**
          * 每一题后通过至少一个空白行分割；最后一题后可以无空行
          * @param lines
@@ -84,6 +87,7 @@ namespace hundun.quizlib.service
             String numText = lines.get(currentLine++);
             if (numText.StartsWith(UTF8_BOM))
             {
+                var length = numText.Length;
                 numText = numText.Substring(1);
             }
 

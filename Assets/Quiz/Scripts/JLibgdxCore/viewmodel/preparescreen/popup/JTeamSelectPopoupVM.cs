@@ -69,17 +69,11 @@ public class JTeamSelectPopoupVM : JAbstractSelectPopoupVM<JTeamNodeVM>
             .ToList()
             ;
         List<JTeamNodeVM> candidateVMs = candidateVMsAndCandidateVMInstances
-            .Select(tuple =>
-            {
-                return tuple.Item1;
-            })
+            .Select(tuple => tuple.Item1)
             .ToList()
             ;
         List<GameObject> candidateVMInstances = candidateVMsAndCandidateVMInstances
-            .Select(tuple =>
-            {
-                return tuple.Item2;
-            })
+            .Select(tuple => tuple.Item2)
             .ToList()
             ;
 

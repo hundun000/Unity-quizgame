@@ -162,7 +162,7 @@ namespace hundun.quizlib.service
         {
             List<QuestionModel> questions = getQuestions(questionPackageName);
             HashSet<String> tags = new HashSet<String>();
-            questions.ForEach(question => tags.addAll(question.tags));
+            questions.ForEach(question => tags.AddRange(question.tags));
             return tags;
         }
     

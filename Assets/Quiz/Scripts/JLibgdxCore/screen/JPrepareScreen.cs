@@ -11,6 +11,7 @@ using static JMatchStrategySelectVM;
 
 public class JPrepareScreen : BaseHundunScreen,
     JTeamSelectPopoupVM.IWaitTeamSelectCallback,
+    JTagSelectPopoupVM.IWaitTagSelectCallback,
     JTeamManageAreaVM.ICallerAndCallback,
     IMatchStrategyChangeListener
 {
@@ -46,7 +47,7 @@ public class JPrepareScreen : BaseHundunScreen,
 
 
         _teamSelectPopoupVM = _popoupRoot.transform.Find("_teamSelectPopoupVM").gameObject;
-        //_tagSelectPopoupVM = this.transform.Find("_popupRoot/_tagSelectPopoupVM").gameObject;
+        _tagSelectPopoupVM = _popoupRoot.transform.Find("_tagSelectPopoupVM").gameObject;
 
         _matchStrategySelectVM = _uiRoot.transform.Find("_matchStrategySelectVM").gameObject;
         _teamManageAreaVM = _uiRoot.transform.Find("_teamManageAreaVM").gameObject;
@@ -55,7 +56,7 @@ public class JPrepareScreen : BaseHundunScreen,
         _toMenuScreenButtonVM = _uiRoot.transform.Find("_toMenuScreenButtonVM").gameObject;
 
         teamSelectPopoupVM = _teamSelectPopoupVM.GetComponent<JTeamSelectPopoupVM>();
-        //tagSelectPopoupVM = _tagSelectPopoupVM.GetComponent<JTagSelectPopoupVM>();
+        tagSelectPopoupVM = _tagSelectPopoupVM.GetComponent<JTagSelectPopoupVM>();
         matchStrategySelectVM = _matchStrategySelectVM.GetComponent<JMatchStrategySelectVM>();
         teamManageAreaVM = _teamManageAreaVM.GetComponent<JTeamManageAreaVM>();
         matchStrategyInfoVM = _matchStrategyInfoVM.GetComponent<JMatchStrategyInfoVM>();
@@ -109,14 +110,16 @@ public class JPrepareScreen : BaseHundunScreen,
 
     void JTeamManageAreaVM.ICallerAndCallback.onTeamWantModify(JTeamManageSlotVM teamSlotVM)
     {
-        throw new NotImplementedException();
+        ((JTagSelectPopoupVM.IWaitTagSelectCallback)this).callShowTagSelectPopoup(
+            teamSlotVM.data, 
+            questionService.getTags(currentQuestionPackageName)
+            );
     }
 
     void JTeamSelectPopoupVM.IWaitTeamSelectCallback.callShowTeamSelectPopoup()
     {
         // --- ui ---
         _teamSelectPopoupVM.SetActive(true);
-        //_teamSelectPopoupVM.transform.SetParent(_popoupRoot.transform);
 
         // --- logic ---
         teamSelectPopoupVM.callShow(teamService.listTeams());
@@ -128,11 +131,9 @@ public class JPrepareScreen : BaseHundunScreen,
         foreach (Transform child in _popoupRoot.transform)
         {
             child.gameObject.SetActive(false);
-            //child.SetParent(null);
         }
 
         // --- logic ---
-        // do nothing
         teamManageAreaVM.updateWaitChangeDone(currenTeamPrototype);
     }
 
@@ -155,6 +156,27 @@ public class JPrepareScreen : BaseHundunScreen,
 
         matchStrategyInfoVM.updateStrategy(currenType);
         teamManageAreaVM.updateSlotNum(targetTeamNum);
+    }
+
+    void JTagSelectPopoupVM.IWaitTagSelectCallback.callShowTagSelectPopoup(TeamPrototype currenTeamPrototype, HashSet<string> allTags)
+    {
+        // --- ui ---
+        _tagSelectPopoupVM.SetActive(true);
+
+        // --- logic ---
+        tagSelectPopoupVM.callShow(currenTeamPrototype, allTags);
+    }
+
+    void JTagSelectPopoupVM.IWaitTagSelectCallback.onTagSelectDone(TeamPrototype currenTeamPrototype)
+    {
+        // --- ui ---
+        foreach (Transform child in _popoupRoot.transform)
+        {
+            child.gameObject.SetActive(false);
+        }
+
+        // --- logic ---
+        teamManageAreaVM.updateWaitChangeDone(currenTeamPrototype);
     }
 }
 

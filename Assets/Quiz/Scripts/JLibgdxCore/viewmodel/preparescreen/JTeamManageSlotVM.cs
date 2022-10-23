@@ -49,6 +49,11 @@ public class JTeamManageSlotVM : MonoBehaviour
 
     }
 
+    public void ModifyTeamButtonOnClick()
+    {
+        callerAndCallback.onTeamWantModify(this);
+    }
+
     // Start is called before the first frame update
     void Start()
     {

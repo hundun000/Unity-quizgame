@@ -5,6 +5,8 @@ using hundun.quizlib.context;
 using hundun.quizlib.exception;
 using hundun.quizlib.service;
 using System;
+using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
@@ -33,17 +35,25 @@ public class QuizLibBridge : IFrontEnd, ISubGameSaveHandler
 
     string[] IFrontEnd.fileGetChilePathNames(string folder)
     {
-        TextAsset txt = (TextAsset)Resources.Load(folder + QuestionLoaderService.FOLDER_CHILD_HINT_FILE_NAME, typeof(TextAsset));
+        TextAsset txt = Resources.Load<TextAsset>(folder + Path.DirectorySeparatorChar + QuestionLoaderService.FOLDER_CHILD_HINT_FILE_NAME_WITHOUT_EXTEND);
         String listContent = txt.text;
         Regex regex = new Regex("\r?\n|\r");
         String[] result = regex.Split(listContent);
+        result = result.Where(it => it.Length > 0).ToArray();
         Debug.LogFormat("[{0}] {1}", this.GetType().Name, "fileGetChilePathNames result = " + JavaFeatureExtension.ArraysAsList(result));
         return result;
     }
 
     string IFrontEnd.fileGetContent(string filePath)
     {
-        TextAsset txt = (TextAsset)Resources.Load(filePath, typeof(TextAsset));
+        String filePathWithoutExtend = filePath.Replace(".txt", "");
+        TextAsset txt = Resources.Load<TextAsset>(filePathWithoutExtend);
+        //filePathWithoutExtend = filePath.Replace("\\", "/");
+        //txt = Resources.Load<TextAsset>(filePathWithoutExtend);
+        if (txt == null)
+        {
+            Debug.LogErrorFormat("filePath {0} cannot load", filePath);
+        }
         string content = txt.text;
         return content;
     }
@@ -54,7 +64,7 @@ public class QuizLibBridge : IFrontEnd, ISubGameSaveHandler
         {
             libDataConfiguration.registerForSaveData(myGameSaveData.teamPrototypes);
             Debug.LogFormat("[{0}] {1}", this.GetType().Name, String.Format(
-                    "applyGameSaveData TeamPrototypes.size = %s",
+                    "applyGameSaveData TeamPrototypes.size = {0}",
                     myGameSaveData.teamPrototypes != null ? myGameSaveData.teamPrototypes.Count : null
                     ));
         }

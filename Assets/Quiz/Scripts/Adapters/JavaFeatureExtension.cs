@@ -24,22 +24,17 @@ namespace hundun.quizlib
 
         public static V getOrDefault<K, V>(this Dictionary<K, V> map, K k, V v)
         {
-            return map[k] != null ? map[k] : v;
+            return map.ContainsKey(k) ? map[k] : v;
         }
 
         public static bool containsKey<K, V>(this Dictionary<K, V> map, K k)
         {
-            return map[k] != null;
+            return map.ContainsKey(k);
         }
 
         public static List<T> ArraysAsList<T>(params T[] vs)
         {
             return vs.ToList();
-        }
-
-        public static List<T> addAll<T>(this List<T> c1, List<T> c2)
-        {
-            return c1.Union(c2).ToList();
         }
 
         public static T get<T>(this List<T> c, int index)

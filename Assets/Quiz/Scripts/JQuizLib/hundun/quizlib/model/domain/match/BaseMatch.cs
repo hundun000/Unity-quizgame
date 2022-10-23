@@ -54,7 +54,7 @@ namespace hundun.quizlib.model.domain.match
         
         public void initTeams(List<TeamRuntimeModel> teamRuntimeModels) {
             this.teamRuntimeModels.Clear();
-            this.teamRuntimeModels.addAll(teamRuntimeModels);
+            this.teamRuntimeModels.AddRange(teamRuntimeModels);
             foreach (TeamRuntimeModel teamRuntimeModel in teamRuntimeModels) {
                 int currentHealth = strategy.calculateCurrentHealth();
                 teamRuntimeModel.setHealth(currentHealth);
