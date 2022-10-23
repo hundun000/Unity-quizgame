@@ -27,18 +27,13 @@ public class JTeamManageAreaVM : MonoBehaviour
     {
         if (targetSlotNum != teamSlotVMs.Count)
         {
-            foreach (Transform child in _scrollViewContent.transform)
-            {
-                GameObject.Destroy(child.gameObject);
-            }
+            _scrollViewContent.transform.AsTableClear();
             teamSlotVMs.Clear();
 
             for (int i = 0; i < targetSlotNum; i++)
             {
 
-                GameObject vmInstance = Instantiate(teamManageSlotVMPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-                JTeamManageSlotVM vm = vmInstance.GetComponent<JTeamManageSlotVM>();
-                vmInstance.transform.SetParent(_scrollViewContent.transform);
+                JTeamManageSlotVM vm = _scrollViewContent.transform.AsTableAdd<JTeamManageSlotVM>(teamManageSlotVMPrefab);
                 vm.postPrefabInitialization(callerAndCallback);
             }
         }

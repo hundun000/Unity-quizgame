@@ -15,5 +15,12 @@ namespace hundun.quizlib.prototype
         [JsonProperty]
         public List<SkillSlotPrototype> skillSlotPrototypes;
 
+
+        public RolePrototype(string name, string description, List<SkillSlotPrototype> skillSlotPrototypes)
+        {
+            this.name = name;
+            this.description = description;
+            this.skillSlotPrototypes = skillSlotPrototypes;
+        }
     }
 }
