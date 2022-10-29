@@ -47,7 +47,7 @@ public class JPrepareScreen : MonoBehaviour,
         }
         else
         {
-            Debug.Log(typeof(JPrepareScreen).Name + ": " + "onChange cannot handle type: " + currenType);
+            Debug.LogWarning(this.GetType().Name + ": " + "onChange cannot handle type: " + currenType);
         }
 
         matchStrategyInfoVM.updateStrategy(currenType);
