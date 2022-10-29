@@ -16,6 +16,9 @@ public class JTeamNodeVM : MonoBehaviour
     Text _banInfoLabel;
     Text _pickInfoLabel;
 
+    // ------ unity adapter member ------
+    public Button _selfAsButton { get; private set; }
+
     /// <summary>
     /// [unity adapter method]
     /// </summary>
@@ -29,8 +32,7 @@ public class JTeamNodeVM : MonoBehaviour
         this._label = this.transform.Find("_label").GetComponent<Text>();
         this._banInfoLabel = this.transform.Find("banpickInfoGroup/_banInfoLabel").GetComponent<Text>();
         this._pickInfoLabel = this.transform.Find("banpickInfoGroup/_pickInfoLabel").GetComponent<Text>();
-        this.GetComponent<Image>().sprite = TextureConfig.getHistoryAreaVMBackgroundDrawable();
-
+        this._selfAsButton = this.GetComponent<Button>();
     }
 
     private void updateData(TeamPrototype data)

@@ -1,3 +1,4 @@
+using hundun.quizlib.prototype;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ public class JTeamManageAreaVM : MonoBehaviour
     void Awake()
     {
         this.callerAndCallback = this.GetComponentInParent<JPrepareScreen>();
-        this._scrollViewContent = this.transform.Find("Scroll View").GetComponent<ScrollRect>().content.gameObject;
+        this._scrollViewContent = this.transform.Find("_content").gameObject;
     }
 
 
@@ -59,5 +60,15 @@ public class JTeamManageAreaVM : MonoBehaviour
     {
         void onTeamWantChange(JTeamManageSlotVM teamSlotVM);
         void onTeamWantModify(JTeamManageSlotVM teamSlotVM);
+    }
+
+    public void onTeamWantChange(JTeamManageSlotVM teamSlotVM)
+    {
+        this.operatingSlotVM = teamSlotVM;
+    }
+
+    internal void updateWaitChangeDone(TeamPrototype teamPrototype)
+    {
+        this.operatingSlotVM.updateData(teamPrototype);
     }
 }

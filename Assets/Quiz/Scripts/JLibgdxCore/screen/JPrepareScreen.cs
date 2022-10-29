@@ -1,4 +1,6 @@
+using hundun.quizlib.prototype;
 using hundun.quizlib.prototype.match;
+using hundun.quizlib.service;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,10 +10,16 @@ using UnityEngine.SceneManagement;
 using static JMatchStrategySelectVM;
 
 public class JPrepareScreen : MonoBehaviour,
-    IMatchStrategyChangeListener,
-    JTeamManageAreaVM.ICallerAndCallback
+    JTeamSelectPopoupVM.IWaitTeamSelectCallback,
+    JTeamManageAreaVM.ICallerAndCallback,
+    IMatchStrategyChangeListener
 {
     private const String ownerName = "PrepareScene";
+    private static readonly List<TeamPrototype> teamPrototypes = new()
+    {
+        new TeamPrototype("砍口垒同好组", new List<String>(), new List<String>(), null),
+        new TeamPrototype("少前同好组", new List<String>(), new List<String>(), null)
+    };
 
     MatchStrategyType currenType;
     int targetTeamNum;
@@ -33,6 +41,10 @@ public class JPrepareScreen : MonoBehaviour,
     private JMatchStrategyInfoVM matchStrategyInfoVM;
     private JToPlayScreenButtonVM toPlayScreenButtonVM;
     private JToMenuScreenButtonVM toMenuScreenButtonVM;
+
+    // ------ unity adapter member ------
+    private GameObject _popoupRoot;
+
 
     void IMatchStrategyChangeListener.onMatchStrategyChange(MatchStrategyType newType)
     {
@@ -57,32 +69,43 @@ public class JPrepareScreen : MonoBehaviour,
 
     void Awake()
     {
-        _teamSelectPopoupVM = GameObject.Find("_teamSelectPopoupVM");
-        _tagSelectPopoupVM = GameObject.Find("_tagSelectPopoupVM");
-        _matchStrategySelectVM = GameObject.Find("_matchStrategySelectVM");
-        _teamManageAreaVM = GameObject.Find("_teamManageAreaVM");
-        _matchStrategyInfoVM = GameObject.Find("_matchStrategyInfoVM");
-        _toPlayScreenButtonVM = GameObject.Find("_toPlayScreenButtonVM");
-        _toMenuScreenButtonVM = GameObject.Find("_toMenuScreenButtonVM");
+        _popoupRoot = GameObject.Find("_popupRoot");
+        
 
-        //teamSelectPopoupVM = _teamSelectPopoupVM.GetComponent<JTeamSelectPopoupVM>();
+
+        _teamSelectPopoupVM = this.transform.Find("_popupRoot/_teamSelectPopoupVM").gameObject;
+        //_tagSelectPopoupVM = this.transform.Find("_popupRoot/_tagSelectPopoupVM").gameObject;
+
+        _matchStrategySelectVM = this.transform.Find("_uiRoot/_matchStrategySelectVM").gameObject;
+        _teamManageAreaVM = this.transform.Find("_uiRoot/_teamManageAreaVM").gameObject;
+        _matchStrategyInfoVM = this.transform.Find("_uiRoot/_matchStrategyInfoVM").gameObject;
+        _toPlayScreenButtonVM = this.transform.Find("_uiRoot/_toPlayScreenButtonVM").gameObject;
+        _toMenuScreenButtonVM = this.transform.Find("_uiRoot/_toMenuScreenButtonVM").gameObject;
+
+        teamSelectPopoupVM = _teamSelectPopoupVM.GetComponent<JTeamSelectPopoupVM>();
         //tagSelectPopoupVM = _tagSelectPopoupVM.GetComponent<JTagSelectPopoupVM>();
         matchStrategySelectVM = _matchStrategySelectVM.GetComponent<JMatchStrategySelectVM>();
         teamManageAreaVM = _teamManageAreaVM.GetComponent<JTeamManageAreaVM>();
         matchStrategyInfoVM = _matchStrategyInfoVM.GetComponent<JMatchStrategyInfoVM>();
         toPlayScreenButtonVM = _toPlayScreenButtonVM.GetComponent<JToPlayScreenButtonVM>();
         toMenuScreenButtonVM = _toMenuScreenButtonVM.GetComponent<JToMenuScreenButtonVM>();
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
-
+        foreach (Transform child in _popoupRoot.transform)
+        {
+            child.gameObject.SetActive(false);
+            //child.SetParent(null);
+        }
 
 
         // ------ post vm init ------ 
         matchStrategySelectVM.checkSlotNum(MatchStrategyType.PRE);
         validateMatchConfig();
+
     }
 
     // Update is called once per frame
@@ -105,12 +128,37 @@ public class JPrepareScreen : MonoBehaviour,
 
     void JTeamManageAreaVM.ICallerAndCallback.onTeamWantChange(JTeamManageSlotVM teamSlotVM)
     {
-        throw new NotImplementedException();
+        teamManageAreaVM.onTeamWantChange(teamSlotVM);
+        ((JTeamSelectPopoupVM.IWaitTeamSelectCallback)this).callShowTeamSelectPopoup();
     }
 
     void JTeamManageAreaVM.ICallerAndCallback.onTeamWantModify(JTeamManageSlotVM teamSlotVM)
     {
         throw new NotImplementedException();
+    }
+
+    void JTeamSelectPopoupVM.IWaitTeamSelectCallback.callShowTeamSelectPopoup()
+    {
+        // --- ui ---
+        _teamSelectPopoupVM.SetActive(true);
+        //_teamSelectPopoupVM.transform.SetParent(_popoupRoot.transform);
+
+        // --- logic ---
+        teamSelectPopoupVM.callShow(teamPrototypes);
+    }
+
+    void JTeamSelectPopoupVM.IWaitTeamSelectCallback.onTeamSelectDone(TeamPrototype currenTeamPrototype)
+    {
+        // --- ui ---
+        foreach (Transform child in _popoupRoot.transform)
+        {
+            child.gameObject.SetActive(false);
+            //child.SetParent(null);
+        }
+
+        // --- logic ---
+        // do nothing
+        teamManageAreaVM.updateWaitChangeDone(currenTeamPrototype);
     }
 }
 

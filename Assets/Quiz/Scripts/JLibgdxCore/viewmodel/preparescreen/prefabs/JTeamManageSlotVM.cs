@@ -34,7 +34,7 @@ public class JTeamManageSlotVM : MonoBehaviour
 
     void Awake()
     {
-        this._noTeamLabelPrefab = this.transform.Find("_noTeamLabelPrefab").gameObject;
+        this._noTeamLabelPrefab = GameObject.FindObjectOfType<JPrepareScreen>().gameObject.transform.Find("templates/_noTeamLabelPrefab").gameObject;
         this._teamNodeAreaContainer = this.transform.Find("_teamNodeAreaContainer").gameObject;
         this._changeTeamButton = this.transform.Find("_changeTeamButton").gameObject.GetComponent<Button>();
         this._modifyTeamButton = this.transform.Find("_modifyTeamButton").gameObject.GetComponent<Button>();
@@ -53,7 +53,7 @@ public class JTeamManageSlotVM : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        updateData(null);
     }
 
 
@@ -69,15 +69,17 @@ public class JTeamManageSlotVM : MonoBehaviour
         if (data != null)
         {
             GameObject vmInstance = Instantiate(teamNodeVMPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-            JTeamNodeVM vm = vmInstance.GetComponent<JTeamNodeVM>();
             vmInstance.transform.SetParent(_teamNodeAreaContainer.transform);
+            vmInstance.transform.localPosition = new Vector3(0, 0, 0);
+
+            JTeamNodeVM vm = vmInstance.GetComponent<JTeamNodeVM>();
             vm.postPrefabInitialization(data);
         }
         else
         {
             GameObject vmInstance = Instantiate(_noTeamLabelPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-            Text vm = vmInstance.GetComponent<Text>();
             vmInstance.transform.SetParent(_teamNodeAreaContainer.transform);
+            vmInstance.transform.localPosition = new Vector3(0, 0, 0);
         }
     }
 }
