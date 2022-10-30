@@ -4,13 +4,13 @@ using UnityEngine;
 public class BaseHundunScreen : MonoBehaviour
 {
 
-
+    public LogicFrameHelper logicFrameHelper;
 
     // ------ unity adapter member ------
-    protected JQuizGdxGame game;
-    protected GameObject _popoupRoot;
-    protected GameObject _uiRoot;
-    protected GameObject _templates;
+    public QuizGdxGame game;
+    public GameObject _popoupRoot;
+    public GameObject _uiRoot;
+    public GameObject _templates;
 
     virtual protected void Awake()
     {
@@ -29,6 +29,6 @@ public class BaseHundunScreen : MonoBehaviour
 
     virtual protected void Start()
     {
-        this.game = JQuizGdxGame.INSTANCE;
+        this.game = QuizGdxGame.INSTANCE;
     }
 }

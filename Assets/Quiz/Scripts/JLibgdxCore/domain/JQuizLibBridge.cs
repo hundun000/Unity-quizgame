@@ -18,7 +18,7 @@ public class QuizLibBridge : IFrontEnd, ISubGameSaveHandler
 
     public QuizComponentContext quizComponentContext { get; private set; }
     public JLibDataConfiguration libDataConfiguration { get; private set; }
-    public QuizLibBridge(JQuizGdxGame game) {
+    public QuizLibBridge(QuizGdxGame game) {
 
         try {
             this.quizComponentContext = QuizComponentContext.Factory.create(this);

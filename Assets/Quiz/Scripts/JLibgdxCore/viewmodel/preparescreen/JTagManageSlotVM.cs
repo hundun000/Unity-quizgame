@@ -8,7 +8,7 @@ public class JTagManageSlotVM : MonoBehaviour
 {
     public static readonly int NODE_WIDTH = 800;
     public static readonly int NODE_HEIGHT = 100;
-    String tag;
+    String tagName;
     TeamPrototype currenTeamPrototype;
 
 
@@ -50,38 +50,38 @@ public class JTagManageSlotVM : MonoBehaviour
         normalCheckBox.onValueChanged.AddListener((bool cuttrntState) => { 
             if (cuttrntState)
             {
-                currenTeamPrototype.pickTags.Remove(tag);
-                currenTeamPrototype.banTags.Remove(tag);
+                currenTeamPrototype.pickTags.Remove(tagName);
+                currenTeamPrototype.banTags.Remove(tagName);
             }
         });
         pickedCheckBox.onValueChanged.AddListener((bool cuttrntState) => {
             if (cuttrntState)
             {
-                currenTeamPrototype.pickTags.Add(tag);
-                currenTeamPrototype.banTags.Remove(tag);
+                currenTeamPrototype.pickTags.Add(tagName);
+                currenTeamPrototype.banTags.Remove(tagName);
             }
         });
         bannedCheckBox.onValueChanged.AddListener((bool cuttrntState) => {
             if (cuttrntState)
             {
-                currenTeamPrototype.pickTags.Remove(tag);
-                currenTeamPrototype.banTags.Add(tag);
+                currenTeamPrototype.pickTags.Remove(tagName);
+                currenTeamPrototype.banTags.Add(tagName);
             }
         });
 
     }
 
-    public void updateData(String tag, TeamPrototype currenTeamPrototype)
+    public void updateData(String tagName, TeamPrototype currenTeamPrototype)
     {
-        this.tag = tag;
+        this.tagName = tagName;
         this.currenTeamPrototype = currenTeamPrototype;
 
-        _label.GetComponent<Text>().text = (tag);
-        if (currenTeamPrototype.pickTags.Contains(tag))
+        _label.GetComponent<Text>().text = (tagName);
+        if (currenTeamPrototype.pickTags.Contains(tagName))
         {
             pickedCheckBox.isOn = (true);
         }
-        else if (currenTeamPrototype.banTags.Contains(tag))
+        else if (currenTeamPrototype.banTags.Contains(tagName))
         {
             bannedCheckBox.isOn = (true);
         }

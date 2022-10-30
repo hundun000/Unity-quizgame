@@ -37,6 +37,7 @@ public class JToPlayScreenButtonVM : MonoBehaviour
         matchConfig.questionPackageName = (screen.currentQuestionPackageName);
         matchConfig.matchStrategyType = (screen.currenType);
 
+        LibgdxFeatureExtension.SetScreenChangePushParams(new System.Object[]{matchConfig});
         SceneManager.LoadScene("PlayScene");
     }
 

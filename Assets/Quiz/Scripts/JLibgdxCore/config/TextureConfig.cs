@@ -21,4 +21,12 @@ public class TextureConfig
 
     }
 
+    internal static Sprite getPlayScreenUITextureAtlas_findRegion(string atlasKeys, int index)
+    {
+        switch (atlasKeys)
+        {
+            default:
+                return Resources.Load<Sprite>(BASE_FOLDER + "playScreenUI/" + atlasKeys + "_" + index);
+        }
+    }
 }
