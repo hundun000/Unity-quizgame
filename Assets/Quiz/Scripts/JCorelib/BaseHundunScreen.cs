@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class BaseHundunScreen : MonoBehaviour
@@ -30,5 +31,24 @@ public class BaseHundunScreen : MonoBehaviour
     virtual protected void Start()
     {
         this.game = QuizGdxGame.INSTANCE;
+    }
+
+    virtual protected void Update()
+    {
+        float delta = Time.deltaTime;
+
+        if (logicFrameHelper != null)
+        {
+            bool isLogicFrame = logicFrameHelper.logicFrameCheck(delta);
+            if (isLogicFrame)
+            {
+                onLogicFrame();
+            }
+        }
+    }
+
+    virtual protected void onLogicFrame()
+    {
+        // base-class do nothing
     }
 }

@@ -28,7 +28,7 @@ public class QuestionStemVM : MonoBehaviour
         List<String> lines = new List<String>();
         for (int i = 0; i < originText.Length; i += WORD_PER_LINE)
         {
-            String line = originText.Substring(i, Math.Min(i + WORD_PER_LINE, originText.Length));
+            String line = originText.Substring(i, Math.Min(i + WORD_PER_LINE, originText.Length) - i);
             lines.Add(line);
         }
         if (lines.Count > 1)

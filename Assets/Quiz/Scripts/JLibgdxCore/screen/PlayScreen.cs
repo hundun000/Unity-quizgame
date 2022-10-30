@@ -49,12 +49,15 @@ public class PlayScreen : BaseHundunScreen
     {
         base.Start();
 
+        // temp when as first scece
+        game.gameLoadOrNew(false);
+
         this.notificationCallerAndCallback = new NotificationCallerAndCallbackDelegation(this, _pauseNotificationBoardVM);
 
         // FIXME fake
         MatchConfig matchConfig = new MatchConfig();
         matchConfig.matchStrategyType = MatchStrategyType.PRE;
-        matchConfig.teamNames = new List<string> { BuiltinDataConfiguration.DEMO_LIST_TEAM_NAME_0 };
+        matchConfig.teamNames = new List<string> { JLibDataConfiguration.ZACA_TEAM_NAME_1 };
         matchConfig.questionPackageName = QuestionLoaderService.RELEASE_PACKAGE_NAME;
 
         LibgdxFeatureExtension.SetScreenChangePushParams(new System.Object[] { matchConfig });
@@ -79,60 +82,11 @@ public class PlayScreen : BaseHundunScreen
         quizInputHandler.rebuildUI();
     }
 
-    /**
-         * @param 一般情况取值ABCD；作为超时传QuestionModel.TIMEOUT_ANSWER_TEXT；作为跳过时传QuestionModel.SKIP_ANSWER_TEXT
-         */
-    public void onChooseOptionOrCountdownZero(String ansOrControl)
+
+    override protected void onLogicFrame()
     {
-        try
-        {
-            // --- call lib ---
-            //currentMatchSituationView = quizLib.teamAnswer(currentMatchSituationView.id, ansOrControl);
-            //AnswerResultEvent answerResultEvent = JavaFeatureForGwt.requireNonNull(currentMatchSituationView.answerResultEvent);
-            //LibgdxFeatureExtension.log(this.GetType().Name, String.Format(
-            //        "answerResultEvent by Result = {0}",
-            //        answerResultEvent.result
-            //        ));
+        quizInputHandler.onLogicFrame();
 
-            //SwitchTeamEvent switchTeamEvent = currentMatchSituationView.switchTeamEvent;
-            //MatchFinishEvent matchFinishEvent = currentMatchSituationView.finishEvent;
-            // --- post ---
-            //countdownClockVM.clearCountdown();
-            //questionResourceAreaVM.stopAudio();
-            //questionOptionAreaVM.showAllOption();
-
-            //animationQueueHandler.addAnimationTask(()->animationCallerAndCallback.callShowQuestionResultAnimation(answerResultEvent));
-            //animationQueueHandler.addAnimationTask(()->animationCallerAndCallback.callShowGeneralDelayAnimation(3.0f));
-
-            //if (matchFinishEvent != null)
-            //{
-            //    animationQueueHandler.addAnimationTask(()->notificationCallerAndCallback.callShowMatchFinishConfirm());
-            //    animationQueueHandler.setAfterAllAnimationDoneTask(()-> {
-            //        handleCurrentTeam(false);
-            //        handelExitAsFinishMatch(toHistory());
-            //    });
-            //}
-            //else
-            //{
-            //    if (switchTeamEvent != null)
-            //    {
-            //        animationQueueHandler.addAnimationTask(()->animationCallerAndCallback.callShowTeamSwitchAnimation(switchTeamEvent));
-            //    }
-            //    animationQueueHandler.setAfterAllAnimationDoneTask(()-> {
-            //        // --- quiz logic ---
-            //        handleCurrentTeam(false);
-            //        handleNewQuestion();
-            //    });
-            //}
-            //animationQueueHandler.checkNextAnimation();
-
-
-        }
-        catch (QuizgameException e)
-        {
-            LibgdxFeatureExtension.error(this.GetType().Name, "QuizgameException", e);
-        }
     }
 
-    
 }

@@ -24,6 +24,10 @@ public static class LibgdxFeatureExtension
         vmInstance.transform.SetParent(thiz.transform);
         vmInstance.transform.localPosition = new Vector3(0, 0, 0);
         T vm = vmInstance.GetComponent<T>();
+        if (vm == null)
+        {
+            throw new Exception("vmInstance.GetComponent<T> is null, maybe forget add Component");
+        }
         return vm;
     }
 

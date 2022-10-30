@@ -21,13 +21,11 @@ public class TeamInfoNode : MonoBehaviour
         this.signSlotImage = this.transform.Find("_signSlotImage").gameObject.GetComponent<Image>();
         this.teamInfoLabel = this.transform.Find("_teamInfoLabelGroup/_teamInfoLabel").gameObject.GetComponent<Text>();
         this.teamInfoLabel2 = this.transform.Find("_teamInfoLabelGroup/_teamInfoLabel2").gameObject.GetComponent<Text>();
-    }
 
-
-    public void postPrefabInitialization()
-    {
         this.signDrawable = TextureConfig.getPlayScreenUITextureAtlas_findRegion(TextureAtlasKeys.pLAYSCREEN_CURRENTTEAMSIGN_BLACK);
     }
+
+
 
     public void updatePrototype(TeamPrototype teamPrototype)
     {
