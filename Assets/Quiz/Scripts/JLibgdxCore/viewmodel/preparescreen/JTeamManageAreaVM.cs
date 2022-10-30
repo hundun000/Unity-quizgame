@@ -2,6 +2,7 @@ using hundun.quizlib.prototype;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,6 +36,8 @@ public class JTeamManageAreaVM : MonoBehaviour
 
                 JTeamManageSlotVM vm = _scrollViewContent.transform.AsTableAdd<JTeamManageSlotVM>(teamManageSlotVMPrefab);
                 vm.postPrefabInitialization(callerAndCallback);
+
+                teamSlotVMs.Add(vm);
             }
         }
     }
@@ -57,13 +60,17 @@ public class JTeamManageAreaVM : MonoBehaviour
         void onTeamWantModify(JTeamManageSlotVM teamSlotVM);
     }
 
-    public void onTeamWantChange(JTeamManageSlotVM teamSlotVM)
+    public void onTeamWantChangeOrModify(JTeamManageSlotVM teamSlotVM)
     {
         this.operatingSlotVM = teamSlotVM;
     }
 
-    internal void updateWaitChangeDone(TeamPrototype teamPrototype)
+    internal List<String> updateWaitChangeDone(TeamPrototype teamPrototype)
     {
         this.operatingSlotVM.updateData(teamPrototype);
+        return teamSlotVMs
+            .Where(it => it.data != null)
+            .Select(it => it.data.name)
+            .ToList();
     }
 }

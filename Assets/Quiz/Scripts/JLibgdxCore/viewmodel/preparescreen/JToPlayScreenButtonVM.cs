@@ -1,3 +1,4 @@
+using hundun.quizlib.prototype.match;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,28 +13,30 @@ public class JToPlayScreenButtonVM : MonoBehaviour
     private Sprite disableDrawable;
     private bool touchable;
 
+    JPrepareScreen screen;
+    Button button;
     // Start is called before the first frame update
     void Awake()
     {
-        _imageComponent = this.GetComponent<Image>();
+        this.screen = this.GetComponentInParent<JPrepareScreen>();
+        this._imageComponent = this.GetComponent<Image>();
 
-        enableDrawable = Resources.Load<Sprite>("Quiz/playScreenUI/systemButton");
-        disableDrawable = Resources.Load<Sprite>("Quiz/playScreenUI/skillButtonUseOut");
+        enableDrawable = TextureConfig.getPlayScreenUITextureAtlas_findRegion(TextureAtlasKeys.PLAYSCREEN_EMPTY_BUTTON);
+        disableDrawable = TextureConfig.getPlayScreenUITextureAtlas_findRegion(TextureAtlasKeys.PLAYSCREEN_SKILLBUTTONUSEOUT);
 
         //JsetTouchable(true);
-        Button button = this.GetComponent<Button>();
+        this.button = this.GetComponent<Button>();
         button.onClick.AddListener(JOnClick);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void JOnClick() 
     {
-        // TODO temp
+        MatchConfig matchConfig = new MatchConfig();
+        matchConfig.teamNames = (screen.selectedTeamNames);
+        matchConfig.questionPackageName = (screen.currentQuestionPackageName);
+        matchConfig.matchStrategyType = (screen.currenType);
+
         SceneManager.LoadScene("PlayScene");
     }
 
@@ -43,10 +46,12 @@ public class JToPlayScreenButtonVM : MonoBehaviour
         if (touchable)
         {
             _imageComponent.sprite = enableDrawable;
+            button.enabled = true;
         } 
         else
         {
             _imageComponent.sprite = disableDrawable;
+            button.enabled = false;
         }
     }
 }

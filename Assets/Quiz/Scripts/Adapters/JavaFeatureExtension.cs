@@ -42,10 +42,6 @@ namespace hundun.quizlib
             return c[index];
         }
 
-        public static HashSet<T> addAll<T>(this HashSet<T> c1, HashSet<T> c2)
-        {
-            return c1.Union(c2).ToHashSet();
-        }
 
         public static bool isEmpty<T>(this ICollection<T> c)
         {

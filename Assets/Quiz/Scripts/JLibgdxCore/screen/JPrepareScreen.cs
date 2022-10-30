@@ -19,10 +19,10 @@ public class JPrepareScreen : BaseHundunScreen,
     TeamService teamService;
     QuestionService questionService;
 
-    MatchStrategyType currenType;
+    public MatchStrategyType currenType;
     int targetTeamNum;
-    String currentQuestionPackageName;
-    List<String> selectedTeamNames;
+    public String currentQuestionPackageName;
+    public List<String> selectedTeamNames;
 
     private JTeamSelectPopoupVM teamSelectPopoupVM;
     private JTagSelectPopoupVM tagSelectPopoupVM;
@@ -104,12 +104,13 @@ public class JPrepareScreen : BaseHundunScreen,
 
     void JTeamManageAreaVM.ICallerAndCallback.onTeamWantChange(JTeamManageSlotVM teamSlotVM)
     {
-        teamManageAreaVM.onTeamWantChange(teamSlotVM);
+        teamManageAreaVM.onTeamWantChangeOrModify(teamSlotVM);
         ((JTeamSelectPopoupVM.IWaitTeamSelectCallback)this).callShowTeamSelectPopoup();
     }
 
     void JTeamManageAreaVM.ICallerAndCallback.onTeamWantModify(JTeamManageSlotVM teamSlotVM)
     {
+        teamManageAreaVM.onTeamWantChangeOrModify(teamSlotVM);
         ((JTagSelectPopoupVM.IWaitTagSelectCallback)this).callShowTagSelectPopoup(
             teamSlotVM.data, 
             questionService.getTags(currentQuestionPackageName)
@@ -134,7 +135,8 @@ public class JPrepareScreen : BaseHundunScreen,
         }
 
         // --- logic ---
-        teamManageAreaVM.updateWaitChangeDone(currenTeamPrototype);
+        selectedTeamNames = teamManageAreaVM.updateWaitChangeDone(currenTeamPrototype);
+        validateMatchConfig();
     }
 
     void IMatchStrategyChangeListener.onMatchStrategyChange(MatchStrategyType newType)

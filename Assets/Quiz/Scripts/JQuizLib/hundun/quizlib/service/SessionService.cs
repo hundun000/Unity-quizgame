@@ -5,6 +5,7 @@ using hundun.quizlib.model.domain;
 using System.Collections.Generic;
 using System;
 using hundun.quizlib.exception;
+using Unity.VisualScripting;
 
 namespace hundun.quizlib.service 
 {
@@ -34,7 +35,7 @@ namespace hundun.quizlib.service
             HashSet<String> tags = new HashSet<String>();
             foreach (QuestionModel question in questions) {
                 questionIds.Add(question.id);
-                tags.addAll(question.tags);
+                tags.AddRange(question.tags);
             }
             questionIds.Shuffle(shuffleRandom);
 

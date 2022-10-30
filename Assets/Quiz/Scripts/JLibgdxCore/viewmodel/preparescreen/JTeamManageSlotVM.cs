@@ -72,10 +72,14 @@ public class JTeamManageSlotVM : MonoBehaviour
 
             JTeamNodeVM vm = _teamNodeAreaContainer.transform.AsTableAdd<JTeamNodeVM>(teamNodeVMPrefab);
             vm.postPrefabInitialization(data);
+
+            _modifyTeamButton.enabled = true;
         }
         else
         {
             GameObject vm = _teamNodeAreaContainer.transform.AsTableAdd<GameObject>(_noTeamLabelPrefab);
+
+            _modifyTeamButton.enabled = false;
         }
     }
 }
