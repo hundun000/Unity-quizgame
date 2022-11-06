@@ -12,8 +12,8 @@ public class TeamScorePairSlotVM : MonoBehaviour
 
     void Awake()
     {
-        this.leftPart = this.transform.Find("_leftPart").gameObject.GetComponent<Text>();
-        this.rightPart = this.transform.Find("_rightPart").gameObject.GetComponent<Text>();
+        this.leftPart = this.transform.Find("_content/_leftPart").gameObject.GetComponent<Text>();
+        this.rightPart = this.transform.Find("_content/_rightPart").gameObject.GetComponent<Text>();
     }
 
     public void update(String name, int? score)

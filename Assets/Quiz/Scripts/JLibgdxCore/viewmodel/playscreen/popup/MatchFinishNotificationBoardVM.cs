@@ -14,6 +14,7 @@ public class MatchFinishNotificationBoardVM : AbstractNotificationBoardVM<MatchH
     Button button;
     Text buttonText;
     Text title;
+    GameObject _vmContainer;
 
     public GameObject matchHistoryVMPrefab;
 
@@ -24,6 +25,7 @@ public class MatchFinishNotificationBoardVM : AbstractNotificationBoardVM<MatchH
         this.title = this.transform.Find("_title").gameObject.GetComponent<Text>();
         this.button = this.transform.Find("_textButton").gameObject.GetComponent<Button>();
         this.buttonText = this.transform.Find("_textButton/_text").gameObject.GetComponent<Text>();
+        this._vmContainer = this.gameObject;
 
         title.text = "比赛记录";
         buttonText.text = "离开并保存";
@@ -36,7 +38,8 @@ public class MatchFinishNotificationBoardVM : AbstractNotificationBoardVM<MatchH
     {
         //this.setVisible(true);
         this.data = history;
-        this.vm = this.transform.AsTableAdd<MatchHistoryVM>(matchHistoryVMPrefab);
+        this.vm = _vmContainer.transform.AsTableAdd<MatchHistoryVM>(matchHistoryVMPrefab);
+        vm.transform.localPosition = new Vector3(0, 0, 0);
         MatchHistoryVM.Factory.fromBO(this.vm, game, history);
 
     }

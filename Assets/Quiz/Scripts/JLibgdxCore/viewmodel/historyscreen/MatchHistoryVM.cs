@@ -20,11 +20,11 @@ public class MatchHistoryVM : MonoBehaviour
 
     void Awake()
     {
-        this._scrollViewContent = this.transform.Find("_content").gameObject;
+        this._scrollViewContent = this.gameObject;
         for (int i = 0; i < NUM_SLOT; i++)
         {
             TeamScorePairSlotVM vm = _scrollViewContent.transform.AsTableAdd<TeamScorePairSlotVM>(teamScorePairSlotVMPrefab);
-
+            vm.transform.localPosition = Vector3.zero;
             slotVMs.Add(vm);
         }
     }
