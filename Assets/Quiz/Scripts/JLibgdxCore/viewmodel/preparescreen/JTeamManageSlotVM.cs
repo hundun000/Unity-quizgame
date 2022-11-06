@@ -33,7 +33,7 @@ public class JTeamManageSlotVM : MonoBehaviour
 
     void Awake()
     {
-        this._noTeamLabelPrefab = GameObject.FindObjectOfType<JPrepareScreen>().GetTemplatesDuringAwake().transform.Find("_noTeamLabelPrefab").gameObject;
+        this._noTeamLabelPrefab = GameObject.FindObjectOfType<JPrepareScreen>().Templates.transform.Find("_noTeamLabelPrefab").gameObject;
         this._teamNodeAreaContainer = this.transform.Find("_teamNodeAreaContainer").gameObject;
         this._changeTeamButton = this.transform.Find("_changeTeamButtonCell/_changeTeamButton").gameObject.GetComponent<Button>();
         this._modifyTeamButton = this.transform.Find("_modifyTeamButtonCell/_modifyTeamButton").gameObject.GetComponent<Button>();

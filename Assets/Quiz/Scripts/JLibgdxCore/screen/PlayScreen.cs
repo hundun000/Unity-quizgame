@@ -18,8 +18,8 @@ public class PlayScreen : BaseHundunScreen
     public GameService quizLib;
     // --- inner class ---
     //private SkillEffectHandler skillEffectHandler = new SkillEffectHandler();
-    //private BlockingAnimationQueueHandler animationQueueHandler = new BlockingAnimationQueueHandler();
-    //private AnimationCallerAndCallbackDelegation animationCallerAndCallback = new AnimationCallerAndCallbackDelegation();
+    public BlockingAnimationQueueHandler animationQueueHandler = new BlockingAnimationQueueHandler();
+    public AnimationCallerAndCallbackDelegation animationCallerAndCallback;
     public NotificationCallerAndCallbackDelegation notificationCallerAndCallback;
     public QuizInputHandler quizInputHandler;
 
@@ -33,16 +33,15 @@ public class PlayScreen : BaseHundunScreen
 
     // Start is called before the first frame update
 
-    GameObject _pauseNotificationBoardVM;
-
     override protected void Awake()
     {
         base.Awake();
 
         
-        this.quizInputHandler = _uiRoot.transform.Find("_quizInputHandler").GetComponent<QuizInputHandler>();
+        this.quizInputHandler = this.UiRoot.transform.Find("_quizInputHandler").GetComponent<QuizInputHandler>();
 
-        this._pauseNotificationBoardVM = _popoupRoot.transform.Find("_pauseNotificationBoardVM").gameObject;
+        this.animationCallerAndCallback = this.transform.Find("_animationCallerAndCallback").GetComponent<AnimationCallerAndCallbackDelegation>();
+        this.notificationCallerAndCallback = this.transform.Find("_notificationCallerAndCallbackDelegation").GetComponent<NotificationCallerAndCallbackDelegation>();
     }
 
     override protected void Start()
@@ -51,8 +50,6 @@ public class PlayScreen : BaseHundunScreen
 
         // temp when as first scece
         game.gameLoadOrNew(false);
-
-        this.notificationCallerAndCallback = new NotificationCallerAndCallbackDelegation(this, _pauseNotificationBoardVM);
 
         // FIXME fake
         MatchConfig matchConfig = new MatchConfig();
@@ -71,10 +68,9 @@ public class PlayScreen : BaseHundunScreen
                 matchConfig.ToString()
                 ));
 
+
         rebuildUI();
-
         quizInputHandler.handleCreateAndStartMatch();
-
     }
 
     private void rebuildUI()
@@ -87,6 +83,11 @@ public class PlayScreen : BaseHundunScreen
     {
         quizInputHandler.onLogicFrame();
 
+    }
+
+    override protected void renderPopupAnimations(float delta)
+    {
+        animationQueueHandler.render(delta);
     }
 
 }

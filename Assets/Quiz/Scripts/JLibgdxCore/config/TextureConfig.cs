@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class TextureConfig
 {
-    const String BASE_FOLDER = "Quiz-UI/"; 
+    const String BASE_FOLDER = "Quiz-UI/";
+
+    internal static Sprite getAnimationsTextureAtlas(string key)
+    {
+        // FIXME temp always _0
+        return Resources.Load<Sprite>(BASE_FOLDER + "playScreenAnimation/" + key + "_0");
+    }
 
     internal static Sprite getHistoryAreaVMBackgroundDrawable()
     {

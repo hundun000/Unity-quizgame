@@ -46,14 +46,14 @@ public class JPrepareScreen : BaseHundunScreen,
         base.Awake();
 
 
-        _teamSelectPopoupVM = _popoupRoot.transform.Find("_teamSelectPopoupVM").gameObject;
-        _tagSelectPopoupVM = _popoupRoot.transform.Find("_tagSelectPopoupVM").gameObject;
+        _teamSelectPopoupVM = this.PopoupRoot.transform.Find("_teamSelectPopoupVM").gameObject;
+        _tagSelectPopoupVM = this.PopoupRoot.transform.Find("_tagSelectPopoupVM").gameObject;
 
-        _matchStrategySelectVM = _uiRoot.transform.Find("_matchStrategySelectVM").gameObject;
-        _teamManageAreaVM = _uiRoot.transform.Find("_teamManageAreaVM").gameObject;
-        _matchStrategyInfoVM = _uiRoot.transform.Find("_matchStrategyInfoVM").gameObject;
-        _toPlayScreenButtonVM = _uiRoot.transform.Find("_toPlayScreenButtonVM").gameObject;
-        _toMenuScreenButtonVM = _uiRoot.transform.Find("_toMenuScreenButtonVM").gameObject;
+        _matchStrategySelectVM = this.UiRoot.transform.Find("_matchStrategySelectVM").gameObject;
+        _teamManageAreaVM = this.UiRoot.transform.Find("_teamManageAreaVM").gameObject;
+        _matchStrategyInfoVM = this.UiRoot.transform.Find("_matchStrategyInfoVM").gameObject;
+        _toPlayScreenButtonVM = this.UiRoot.transform.Find("_toPlayScreenButtonVM").gameObject;
+        _toMenuScreenButtonVM = this.UiRoot.transform.Find("_toMenuScreenButtonVM").gameObject;
 
         teamSelectPopoupVM = _teamSelectPopoupVM.GetComponent<JTeamSelectPopoupVM>();
         tagSelectPopoupVM = _tagSelectPopoupVM.GetComponent<JTagSelectPopoupVM>();
@@ -74,7 +74,7 @@ public class JPrepareScreen : BaseHundunScreen,
 
         this.currentQuestionPackageName = QuestionLoaderService.RELEASE_PACKAGE_NAME;
 
-        foreach (Transform child in _popoupRoot.transform)
+        foreach (Transform child in this.PopoupRoot.transform)
         {
             child.gameObject.SetActive(false);
             //child.SetParent(null);
@@ -129,7 +129,7 @@ public class JPrepareScreen : BaseHundunScreen,
     void JTeamSelectPopoupVM.IWaitTeamSelectCallback.onTeamSelectDone(TeamPrototype currenTeamPrototype)
     {
         // --- ui ---
-        foreach (Transform child in _popoupRoot.transform)
+        foreach (Transform child in this.PopoupRoot.transform)
         {
             child.gameObject.SetActive(false);
         }
@@ -172,7 +172,7 @@ public class JPrepareScreen : BaseHundunScreen,
     void JTagSelectPopoupVM.IWaitTagSelectCallback.onTagSelectDone(TeamPrototype currenTeamPrototype)
     {
         // --- ui ---
-        foreach (Transform child in _popoupRoot.transform)
+        foreach (Transform child in this.PopoupRoot.transform)
         {
             child.gameObject.SetActive(false);
         }

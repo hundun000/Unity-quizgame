@@ -8,6 +8,7 @@ using Debug = UnityEngine.Debug;
 
 public static class LibgdxFeatureExtension
 {
+    public const String ADAPTER_BASE_RESOURCE_FOLDER = "Quiz-Adapter/";
     static System.Object[] pushParams;
 
     public static void AsTableClear(this Transform thiz)

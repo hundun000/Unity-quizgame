@@ -23,11 +23,11 @@ public class JMenuScreen : BaseHundunScreen
     {
         base.Awake();
 
-        this._buttonAreaRoot = _uiRoot.transform.Find("_buttonAreaRoot").gameObject;
-        this._title = _uiRoot.transform.Find("_title").gameObject;
-        this._buttonContinueGamePrefab = _templates.transform.Find("_buttonAreaRoot").gameObject;
-        this._buttonNewGamePrefab = _templates.transform.Find("_buttonAreaRoot").gameObject;
-        this._buttonHistorySreenPrefab = _templates.transform.Find("_buttonAreaRoot").gameObject;
+        this._buttonAreaRoot = this.UiRoot.transform.Find("_buttonAreaRoot").gameObject;
+        this._title = this.UiRoot.transform.Find("_title").gameObject;
+        this._buttonContinueGamePrefab = this.Templates.transform.Find("_buttonAreaRoot").gameObject;
+        this._buttonNewGamePrefab = this.Templates.transform.Find("_buttonAreaRoot").gameObject;
+        this._buttonHistorySreenPrefab = this.Templates.transform.Find("_buttonAreaRoot").gameObject;
 
 
         _buttonContinueGamePrefab.GetComponent<Button>().onClick.AddListener(() => {

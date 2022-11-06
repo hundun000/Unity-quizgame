@@ -9,24 +9,49 @@ public class BaseHundunScreen : MonoBehaviour
 
     // ------ unity adapter member ------
     public QuizGdxGame game;
-    public GameObject _popoupRoot;
-    public GameObject _uiRoot;
-    public GameObject _templates;
+    private GameObject _popoupRoot;
+    private GameObject _uiRoot;
+    private GameObject _templates;
+
+    public GameObject PopoupRoot 
+    {
+        get
+        {
+            if (_popoupRoot == null)
+            {
+                _popoupRoot = this.transform.Find("_popupRoot").gameObject;
+            }
+            return _popoupRoot;
+        }
+    }
+    public GameObject UiRoot
+    {
+        get
+        {
+            if (_uiRoot == null)
+            {
+                _uiRoot = this.transform.Find("_uiRoot").gameObject;
+            }
+            return _uiRoot;
+        }
+    }
+    public GameObject Templates
+    {
+        get
+        {
+            if (_templates == null)
+            {
+                _templates = this.transform.Find("_templates").gameObject;
+            }
+            return _templates;
+        }
+    }
 
     virtual protected void Awake()
     {
-        this._popoupRoot = this.transform.Find("_popupRoot").gameObject;
-        this._uiRoot = this.transform.Find("_uiRoot").gameObject;
-        this._templates = this.transform.Find("_templates").gameObject;
+        // base do nothing
     }
 
-    /// <summary>
-    /// 供Screen尚未完成Awake时，子组件Awake使用。
-    /// </summary>
-    public GameObject GetTemplatesDuringAwake()
-    {
-        return this.transform.Find("_templates").gameObject;
-    }
 
     virtual protected void Start()
     {
@@ -45,9 +70,16 @@ public class BaseHundunScreen : MonoBehaviour
                 onLogicFrame();
             }
         }
+
+        renderPopupAnimations(delta);
     }
 
     virtual protected void onLogicFrame()
+    {
+        // base-class do nothing
+    }
+
+    virtual protected void renderPopupAnimations(float delta)
     {
         // base-class do nothing
     }

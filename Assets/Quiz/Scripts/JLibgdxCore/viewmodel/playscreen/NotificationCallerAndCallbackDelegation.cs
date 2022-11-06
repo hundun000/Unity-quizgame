@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class NotificationCallerAndCallbackDelegation :
+public class NotificationCallerAndCallbackDelegation : MonoBehaviour,
     PauseNotificationBoardVM.CallerAndCallback
 {
 
@@ -17,13 +17,10 @@ public class NotificationCallerAndCallbackDelegation :
 
     GameObject _pauseNotificationBoardVM;
 
-    public NotificationCallerAndCallbackDelegation(
-        PlayScreen owner,
-        GameObject _pauseNotificationBoardVM
-        )
+    void Awake()
     {
-        this.owner = owner;
-        this._pauseNotificationBoardVM = _pauseNotificationBoardVM;
+        this.owner = this.GetComponentInParent<PlayScreen>();
+        this._pauseNotificationBoardVM = owner.PopoupRoot.transform.Find("_pauseNotificationBoardVM").gameObject;
         this.pauseNotificationBoardVM = _pauseNotificationBoardVM.GetComponent<PauseNotificationBoardVM>();
     }
 
@@ -42,7 +39,7 @@ public class NotificationCallerAndCallbackDelegation :
     {
         LibgdxFeatureExtension.log(this.GetType().Name, "onConfirmed called");
         // --- for screen ---
-        foreach (Transform child in owner._popoupRoot.transform)
+        foreach (Transform child in owner.PopoupRoot.transform)
         {
             child.gameObject.SetActive(false);
         }

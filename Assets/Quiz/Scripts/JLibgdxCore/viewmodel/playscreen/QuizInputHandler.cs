@@ -121,7 +121,25 @@ public class QuizInputHandler : MonoBehaviour,
 
     public void onChooseOption(int index)
     {
-        throw new NotImplementedException();
+        LibgdxFeatureExtension.log(this.GetType().Name, "onChooseOption called");
+        String ans;
+        switch (index)
+        {
+            default:
+            case 0:
+                ans = "A";
+                break;
+            case 1:
+                ans = "B";
+                break;
+            case 2:
+                ans = "C";
+                break;
+            case 3:
+                ans = "D";
+                break;
+        }
+        onChooseOptionOrCountdownZero(ans);
     }
 
     /**
@@ -146,8 +164,8 @@ public class QuizInputHandler : MonoBehaviour,
             //questionResourceAreaVM.stopAudio();
             questionOptionAreaVM.showAllOption();
 
-            //animationQueueHandler.addAnimationTask(()->animationCallerAndCallback.callShowQuestionResultAnimation(answerResultEvent));
-            //animationQueueHandler.addAnimationTask(()->animationCallerAndCallback.callShowGeneralDelayAnimation(3.0f));
+            owner.animationQueueHandler.addAnimationTask((voidIt)=> owner.animationCallerAndCallback.callShowQuestionResultAnimation(answerResultEvent));
+            //owner.animationQueueHandler.addAnimationTask((voidIt) => owner.animationCallerAndCallback.callShowGeneralDelayAnimation(3.0f));
 
             //if (matchFinishEvent != null)
             //{
@@ -169,7 +187,7 @@ public class QuizInputHandler : MonoBehaviour,
             //        handleNewQuestion();
             //    });
             //}
-            //animationQueueHandler.checkNextAnimation();
+            owner.animationQueueHandler.checkNextAnimation();
 
 
         }
