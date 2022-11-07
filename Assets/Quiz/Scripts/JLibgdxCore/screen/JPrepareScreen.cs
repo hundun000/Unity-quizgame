@@ -8,7 +8,8 @@ using UnityEngine.SceneManagement;
 using static JMatchStrategySelectVM;
 
 public class JPrepareScreen : MonoBehaviour,
-    IMatchStrategyChangeListener
+    IMatchStrategyChangeListener,
+    JTeamManageAreaVM.ICallerAndCallback
 {
     private const String ownerName = "PrepareScene";
 
@@ -100,6 +101,16 @@ public class JPrepareScreen : MonoBehaviour,
         {
             _toPlayScreenButtonVM.GetComponent<JToPlayScreenButtonVM>().JsetTouchable(false);
         }
+    }
+
+    void JTeamManageAreaVM.ICallerAndCallback.onTeamWantChange(JTeamManageSlotVM teamSlotVM)
+    {
+        throw new NotImplementedException();
+    }
+
+    void JTeamManageAreaVM.ICallerAndCallback.onTeamWantModify(JTeamManageSlotVM teamSlotVM)
+    {
+        throw new NotImplementedException();
     }
 }
 

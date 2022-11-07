@@ -11,8 +11,8 @@ using UnityEngine.UI;
 public class JMatchStrategyInfoVM : MonoBehaviour
 {
 
-    internal Text _nameLabel;
-    internal Text[,] _labelMap;
+    internal Text nameLabel;
+    internal Text[,] labelMap;
 
     internal GameObject[] _labelEntryGameObject;
     internal GameObject[,] _labelGameObject;
@@ -21,8 +21,8 @@ public class JMatchStrategyInfoVM : MonoBehaviour
 
     void Awake()
     {
-        this._nameLabel = this.transform.Find("_nameLabel").GetComponent<Text>();
-        this._labelMap = new Text[MAP_LINE_SIZE, 2];
+        this.nameLabel = this.transform.Find("_nameLabel").GetComponent<Text>();
+        this.labelMap = new Text[MAP_LINE_SIZE, 2];
         this._labelEntryGameObject = new GameObject[MAP_LINE_SIZE];
         this._labelGameObject = new GameObject[MAP_LINE_SIZE, 2];
 
@@ -32,15 +32,15 @@ public class JMatchStrategyInfoVM : MonoBehaviour
             for (int y = 0; y < _labelGameObject.GetLength(1); y += 1)
             {
                 _labelGameObject[x, y] = _labelEntryGameObject[x].transform.Find(String.Format("_labelMap_X{0}", y)).gameObject;
-                _labelMap[x, y] = _labelGameObject[x, y].GetComponent<Text>();
+                labelMap[x, y] = _labelGameObject[x, y].GetComponent<Text>();
             }
         }
 
-        _labelMap[0, 0].text = ("每题时间限制：");
-        _labelMap[1, 0].text = ("每局答题总数限制：");
-        _labelMap[2, 0].text = ("是否可使用技能：");
-        _labelMap[3, 0].text = ("轮换队伍的答题数：");
-        _labelMap[4, 0].text = ("参赛队伍数量限制：");
+        labelMap[0, 0].text = ("每题时间限制：");
+        labelMap[1, 0].text = ("每局答题总数限制：");
+        labelMap[2, 0].text = ("是否可使用技能：");
+        labelMap[3, 0].text = ("轮换队伍的答题数：");
+        labelMap[4, 0].text = ("参赛队伍数量限制：");
 
     }
 
@@ -63,35 +63,35 @@ public class JMatchStrategyInfoVM : MonoBehaviour
         switch (type)
         {
             case MatchStrategyType.PRE:
-                _nameLabel.text = (toMatchStrategyTypeChinese(type));
-                _labelMap[0, 1].text = ("20秒");
-                _labelMap[1, 1].text = ("5");
-                _labelMap[2, 1].text = ("否");
-                _labelMap[3, 1].text = ("");
-                _labelMap[4, 1].text = ("1");
+                nameLabel.text = (toMatchStrategyTypeChinese(type));
+                labelMap[0, 1].text = ("20秒");
+                labelMap[1, 1].text = ("5");
+                labelMap[2, 1].text = ("否");
+                labelMap[3, 1].text = ("");
+                labelMap[4, 1].text = ("1");
                 break;
             case MatchStrategyType.MAIN:
-                _nameLabel.text = (toMatchStrategyTypeChinese(type));
-                _labelMap[0, 1].text = ("20秒");
-                _labelMap[1, 1].text = ("");
-                _labelMap[2, 1].text = ("是");
-                _labelMap[3, 1].text = ("1");
-                _labelMap[4, 1].text = ("2");
+                nameLabel.text = (toMatchStrategyTypeChinese(type));
+                labelMap[0, 1].text = ("20秒");
+                labelMap[1, 1].text = ("");
+                labelMap[2, 1].text = ("是");
+                labelMap[3, 1].text = ("1");
+                labelMap[4, 1].text = ("2");
                 break;
             default:
-                _nameLabel.text = (toMatchStrategyTypeChinese(type));
-                _labelMap[1, 0].text = ("");
-                _labelMap[1, 1].text = ("");
-                _labelMap[1, 2].text = ("");
-                _labelMap[1, 3].text = ("");
-                _labelMap[1, 4].text = ("");
+                nameLabel.text = (toMatchStrategyTypeChinese(type));
+                labelMap[1, 0].text = ("");
+                labelMap[1, 1].text = ("");
+                labelMap[1, 2].text = ("");
+                labelMap[1, 3].text = ("");
+                labelMap[1, 4].text = ("");
                 break;
         }
 
         for (int x = 0; x < _labelGameObject.GetLength(0); x += 1)
         {
             
-            if (_labelMap[x, 1].text.Length == 0)
+            if (labelMap[x, 1].text.Length == 0)
             {
                 _labelEntryGameObject[x].SetActive(false);
                 //labelEntryGameObjectMap[x].transform.SetParent(null);
