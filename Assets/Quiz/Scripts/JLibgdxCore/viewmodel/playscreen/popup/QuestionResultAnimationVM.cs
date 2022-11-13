@@ -18,27 +18,24 @@ public class QuestionResultAnimationVM : AbstractAnimationVM<AnswerResultEvent>
 
     public override void callShow(AnswerResultEvent answerResultEvent)
     {
-        FakeAnimation animation;
+        GdxAnimation<Sprite> animation;
         if (answerResultEvent.result == AnswerType.CORRECT)
         {
-            animation = new FakeAnimation(
-                    TextureConfig.getAnimationsTextureAtlas("break"),
-                    0.25f, 8
+            animation = aminationFactory(
+                    "break", 0.25f, PlayMode.REVERSED
                     );
         }
         else if (answerResultEvent.result == AnswerType.WRONG
                 || answerResultEvent.result == AnswerType.SKIPPED)
         {
-            animation = new FakeAnimation(
-                    TextureConfig.getAnimationsTextureAtlas("continue"),
-                    0.25f, 8
+            animation = aminationFactory(
+                    "continue", 0.25f, PlayMode.REVERSED
                     );
         }
         else if (answerResultEvent.result == AnswerType.TIMEOUOT_WRONG)
         {
-            animation = new FakeAnimation(
-                    TextureConfig.getAnimationsTextureAtlas("timeout"),
-                    0.25f, 8
+            animation = aminationFactory(
+                    "timeout", 0.25f, PlayMode.REVERSED
                     );
         }
         else

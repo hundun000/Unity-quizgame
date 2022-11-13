@@ -87,4 +87,9 @@ public class AnimationCallerAndCallbackDelegation : MonoBehaviour,
     {
         throw new NotImplementedException();
     }
+
+    internal void callShowSkillAnimation(SkillResultEvent skillResultEvent)
+    {
+        throw new NotImplementedException();
+    }
 }

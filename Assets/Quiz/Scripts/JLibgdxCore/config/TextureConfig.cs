@@ -7,10 +7,24 @@ public class TextureConfig
 {
     const String BASE_FOLDER = "Quiz-UI/";
 
-    internal static Sprite getAnimationsTextureAtlas(string key)
+    internal static List<Sprite> getAnimationsTextureAtlas(string key)
     {
-        // FIXME temp always _0
-        return Resources.Load<Sprite>(BASE_FOLDER + "playScreenAnimation/" + key + "_0");
+        List<Sprite> list = new List<Sprite>();
+        int i = 0;
+        while (true)
+        {
+            Sprite sprite = Resources.Load<Sprite>(BASE_FOLDER + "playScreenAnimation/" + key + "_" + i);
+            if (sprite != null)
+            {
+                list.Add(sprite);
+                i++;
+            }
+            else
+            {
+                break;
+            }
+        }
+        return list;
     }
 
     internal static Sprite getPlayScreenUITextureAtlas_findRegion(string atlasKeys)

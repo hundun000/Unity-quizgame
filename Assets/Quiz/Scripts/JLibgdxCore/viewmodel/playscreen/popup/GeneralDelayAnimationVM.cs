@@ -19,13 +19,11 @@ public class GeneralDelayAnimationVM : AbstractAnimationVM<float>
 
     public override void callShow(float delaySecond)
     {
-        FakeAnimation animation;
-        int fakeRegionArraySize = 1;
-        float frameDuration = delaySecond / fakeRegionArraySize;
-        animation = new FakeAnimation(
-                    TextureConfig.getAnimationsTextureAtlas("delay"),
-                    frameDuration, fakeRegionArraySize
-                    );
+        GdxAnimation<Sprite> animation = aminationFactoryBySumTime(
+                "delay",
+                delaySecond,
+                PlayMode.NORMAL
+                );
 
         this.myAnimation = (animation);
         base.resetFrame();

@@ -2,6 +2,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TreeEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +17,7 @@ public abstract class AbstractAnimationVM : MonoBehaviour
     protected QuizGdxGame game;
     public bool runningState { get; protected set; }
     // FIXME
-    protected FakeAnimation myAnimation;
+    protected GdxAnimation<Sprite> myAnimation;
     private float stateTime;
 
 
@@ -72,27 +73,19 @@ public abstract class AbstractAnimationVM : MonoBehaviour
     {
         void onAnimationDone();
     }
-}
 
-
-public class FakeAnimation 
-{
-    readonly Sprite fakeAniamtionFrame;
-    readonly float totalTime;
-    public FakeAnimation(Sprite fakeAniamtionFrame, float frameDuration, int fakeNumFrame)
+    public static GdxAnimation<Sprite> aminationFactory(String id, float frameDuration, PlayMode playMode)
     {
-        this.totalTime = (frameDuration * fakeNumFrame);
-        this.fakeAniamtionFrame = fakeAniamtionFrame;
+        List<Sprite> drawableArray = TextureConfig.getAnimationsTextureAtlas(id);
+        return new GdxAnimation<Sprite>(frameDuration, drawableArray, playMode);
     }
-
-    internal Sprite getKeyFrame(float stateTime)
+    
+    public GdxAnimation<Sprite> aminationFactoryBySumTime(String id,
+            float second, PlayMode playMode)
     {
-        return fakeAniamtionFrame;
-    }
-
-    internal bool isAnimationFinished(float stateTime)
-    {
-        return stateTime >= totalTime;
+        List<Sprite> drawableArray = TextureConfig.getAnimationsTextureAtlas(id);
+        float frameDuration = second / drawableArray.Count;
+        return new GdxAnimation<Sprite>(frameDuration, drawableArray, playMode);
     }
 }
 

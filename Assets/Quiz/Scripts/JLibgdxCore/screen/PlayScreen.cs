@@ -17,7 +17,7 @@ public class PlayScreen : BaseHundunScreen
 
     public GameService quizLib;
     // --- inner class ---
-    //private SkillEffectHandler skillEffectHandler = new SkillEffectHandler();
+    public SkillEffectHandler skillEffectHandler = new SkillEffectHandler();
     public BlockingAnimationQueueHandler animationQueueHandler = new BlockingAnimationQueueHandler();
     public AnimationCallerAndCallbackDelegation animationCallerAndCallback;
     public NotificationCallerAndCallbackDelegation notificationCallerAndCallback;

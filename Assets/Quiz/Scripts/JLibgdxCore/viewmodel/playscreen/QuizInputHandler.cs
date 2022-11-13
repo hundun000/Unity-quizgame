@@ -11,10 +11,12 @@ using static HistoryScreen;
 using System.Linq;
 using UnityEngine.SceneManagement;
 using static QuestionResourceAreaVM;
+using hundun.quizlib.prototype.skill;
 
 public class QuizInputHandler : MonoBehaviour,
     CountdownClockVM.CallerAndCallback,
     QuestionOptionAreaVM.CallerAndCallback,
+    SkillBoardVM.CallerAndCallback,
     IAudioCallback
 {
 
@@ -26,7 +28,7 @@ public class QuizInputHandler : MonoBehaviour,
     SystemBoardVM systemBoardVM;
     QuestionResourceAreaVM questionResourceAreaVM;
     QuestionOptionAreaVM questionOptionAreaVM;
-    //SkillBoardVM skillBoardVM;
+    SkillBoardVM skillBoardVM;
 
 
     void Awake()
@@ -38,6 +40,7 @@ public class QuizInputHandler : MonoBehaviour,
         this.systemBoardVM = this.transform.Find("_systemBoardVM").GetComponent<SystemBoardVM>();
         this.questionResourceAreaVM = this.transform.Find("_questionResourceAreaVM").GetComponent<QuestionResourceAreaVM>();
         this.questionOptionAreaVM = this.transform.Find("_questionOptionAreaVM").GetComponent<QuestionOptionAreaVM>();
+        this.skillBoardVM = this.transform.Find("_skillBoardVM").GetComponent<SkillBoardVM>();
     }
 
     public void postPrefabInitialization(
@@ -46,6 +49,7 @@ public class QuizInputHandler : MonoBehaviour,
     {
         countdownClockVM.postPrefabInitialization(owner.game, this, owner.logicFrameHelper);
         questionResourceAreaVM.postPrefabInitialization(game, this);
+        skillBoardVM.postPrefabInitialization(this);
     }
 
         internal void handleCreateAndStartMatch()
@@ -112,8 +116,7 @@ public class QuizInputHandler : MonoBehaviour,
         {
             teamInfoBoardVM.updateTeamPrototype(owner.teamPrototypes);
             TeamPrototype currentTeamPrototype = owner.teamPrototypes[owner.currentMatchSituationView.currentTeamIndex];
-            // TODO
-            //skillBoardVM.updateRole(currentTeamPrototype.getRolePrototype(), currentMatchSituationView.getCurrentTeamRuntimeInfo().getRoleRuntimeInfo());
+            skillBoardVM.updateRole(currentTeamPrototype.rolePrototype, owner.currentMatchSituationView.currentTeamRuntimeInfo.roleRuntimeInfo);
         }
         teamInfoBoardVM.updateTeamRuntime(owner.matchConfig.matchStrategyType, owner.currentMatchSituationView.currentTeamIndex, owner.currentMatchSituationView.teamRuntimeInfos);
     }
@@ -243,5 +246,32 @@ public class QuizInputHandler : MonoBehaviour,
     {
         LibgdxFeatureExtension.log(this.GetType().Name, "onPlayReady called");
         owner.logicFrameHelper.logicFramePause = (true);
+    }
+
+    public void onChooseSkill(int index)
+    {
+        LibgdxFeatureExtension.log(this.GetType().Name, "onChooseSkill called");
+        TeamPrototype currentTeamPrototype = owner.teamPrototypes[owner.currentMatchSituationView.currentTeamIndex];
+        SkillSlotPrototype skillSlotPrototype = currentTeamPrototype.rolePrototype.skillSlotPrototypes[index];
+        try
+        {
+            owner.currentMatchSituationView = owner.quizLib.teamUseSkill(owner.currentMatchSituationView.id, skillSlotPrototype.name);
+            SkillResultEvent skillResultEvent = JavaFeatureForGwt.requireNonNull(owner.currentMatchSituationView.skillResultEvent);
+            LibgdxFeatureExtension.log(this.GetType().Name, String.Format(
+                    "skillResultEvent by Type = {0}",
+                    skillResultEvent.type
+                    ));
+            owner.animationQueueHandler.addAnimationTask((voidIt) => owner.animationCallerAndCallback.callShowSkillAnimation(skillResultEvent));
+            owner.animationQueueHandler.afterAllAnimationDoneTask = ((voidIt) => {
+                skillBoardVM.updateSkillRuntime(index, skillResultEvent.skillRemainTime);
+                owner.skillEffectHandler.handle(skillResultEvent);
+            });
+            owner.animationQueueHandler.checkNextAnimation();
+
+        }
+        catch (QuizgameException e)
+        {
+            LibgdxFeatureExtension.error(this.GetType().Name, "QuizgameException", e);
+        }
     }
 }
