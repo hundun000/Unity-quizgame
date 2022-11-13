@@ -10,10 +10,12 @@ using System;
 using static HistoryScreen;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using static QuestionResourceAreaVM;
 
 public class QuizInputHandler : MonoBehaviour,
     CountdownClockVM.CallerAndCallback,
-    QuestionOptionAreaVM.CallerAndCallback
+    QuestionOptionAreaVM.CallerAndCallback,
+    IAudioCallback
 {
 
     PlayScreen owner;
@@ -22,7 +24,7 @@ public class QuizInputHandler : MonoBehaviour,
     QuestionStemVM questionStemVM;
     TeamInfoBoardVM teamInfoBoardVM;
     SystemBoardVM systemBoardVM;
-    //QuestionResourceAreaVM questionResourceAreaVM;
+    QuestionResourceAreaVM questionResourceAreaVM;
     QuestionOptionAreaVM questionOptionAreaVM;
     //SkillBoardVM skillBoardVM;
 
@@ -34,11 +36,19 @@ public class QuizInputHandler : MonoBehaviour,
         this.questionStemVM = this.transform.Find("_questionStemVM").GetComponent<QuestionStemVM>();
         this.teamInfoBoardVM = this.transform.Find("_teamInfoBoardVM").GetComponent<TeamInfoBoardVM>();
         this.systemBoardVM = this.transform.Find("_systemBoardVM").GetComponent<SystemBoardVM>();
+        this.questionResourceAreaVM = this.transform.Find("_questionResourceAreaVM").GetComponent<QuestionResourceAreaVM>();
         this.questionOptionAreaVM = this.transform.Find("_questionOptionAreaVM").GetComponent<QuestionOptionAreaVM>();
     }
 
+    public void postPrefabInitialization(
+        QuizGdxGame game
+        )
+    {
+        countdownClockVM.postPrefabInitialization(owner.game, this, owner.logicFrameHelper);
+        questionResourceAreaVM.postPrefabInitialization(game, this);
+    }
 
-    internal void handleCreateAndStartMatch()
+        internal void handleCreateAndStartMatch()
     {
         try
         {
@@ -86,13 +96,7 @@ public class QuizInputHandler : MonoBehaviour,
         countdownClockVM.resetCountdown(switchQuestionEvent.time);
         questionOptionAreaVM.updateQuestion(owner.currentMatchSituationView.question);
         questionStemVM.updateQuestion(owner.currentMatchSituationView.question);
-
-    }
-
-    internal void rebuildUI()
-    {
-        countdownClockVM.postPrefabInitialization(owner.game, this, owner.logicFrameHelper);
-        // questionStemVM do nothing
+        questionResourceAreaVM.updateQuestion(owner.currentMatchSituationView.question);
     }
 
     void CountdownClockVM.CallerAndCallback.onCountdownZero()
@@ -164,7 +168,7 @@ public class QuizInputHandler : MonoBehaviour,
             MatchFinishEvent matchFinishEvent = owner.currentMatchSituationView.finishEvent;
             //---post-- -
             countdownClockVM.clearCountdown();
-            //questionResourceAreaVM.stopAudio();
+            questionResourceAreaVM.stopAudio();
             questionOptionAreaVM.showAllOption();
 
             owner.animationQueueHandler.addAnimationTask((voidIt)=> owner.animationCallerAndCallback.callShowQuestionResultAnimation(answerResultEvent));
@@ -227,5 +231,17 @@ public class QuizInputHandler : MonoBehaviour,
         owner.currentMatchSituationView = null;
 
         owner.animationQueueHandler.clear();
+    }
+
+    public void onFirstPlayDone()
+    {
+        LibgdxFeatureExtension.log(this.GetType().Name, "onFirstPlayDone called");
+        owner.logicFrameHelper.logicFramePause = (false);
+    }
+
+    public void onPlayReady()
+    {
+        LibgdxFeatureExtension.log(this.GetType().Name, "onPlayReady called");
+        owner.logicFrameHelper.logicFramePause = (true);
     }
 }

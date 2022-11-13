@@ -55,7 +55,7 @@ public class PlayScreen : BaseHundunScreen
         MatchConfig matchConfig = new MatchConfig();
         matchConfig.matchStrategyType = MatchStrategyType.PRE;
         matchConfig.teamNames = new List<string> { JLibDataConfiguration.ZACA_TEAM_NAME_1 };
-        matchConfig.questionPackageName = QuestionLoaderService.RELEASE_PACKAGE_NAME;
+        matchConfig.questionPackageName = QuestionLoaderService.PRELEASE_PACKAGE_NAME;
 
         LibgdxFeatureExtension.SetScreenChangePushParams(new System.Object[] { matchConfig });
 
@@ -75,7 +75,7 @@ public class PlayScreen : BaseHundunScreen
 
     private void rebuildUI()
     {
-        quizInputHandler.rebuildUI();
+        quizInputHandler.postPrefabInitialization(game);
     }
 
 

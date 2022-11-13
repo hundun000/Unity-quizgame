@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -39,5 +40,25 @@ public class TextureConfig
             default:
                 return Resources.Load<Sprite>(BASE_FOLDER + "playScreenUI/" + atlasKeys + "_" + index);
         }
+    }
+
+    internal static Sprite[] getPlayScreenUITextureAtlas_findRegions(string atlasKeys)
+    {
+        List<Sprite> list = new List<Sprite>();
+        int i = 0;
+        while (true)
+        {
+            Sprite sprite = getPlayScreenUITextureAtlas_findRegion(atlasKeys, i);
+            if (sprite != null)
+            {
+                list.Add(sprite);
+                i++;
+            } 
+            else
+            {
+                break;
+            }
+        }
+        return list.ToArray();
     }
 }
