@@ -49,6 +49,6 @@ public static class LibgdxFeatureExtension
 
     internal static void error(string name, string str, Exception e)
     {
-        Debug.LogFormat("[{0}] {1}: {2}", name, str, e.Message);
+        Debug.LogErrorFormat("[{0}] {1}: {2}", name, str, e.Message);
     }
 }

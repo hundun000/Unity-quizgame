@@ -30,8 +30,8 @@ public class OptionNode : MonoBehaviour
         this.index = index;
         this.selectedAtlasRegion = TextureConfig.getPlayScreenUITextureAtlas_findRegion(TextureAtlasKeys.PLAYSCREEN_OPTIONBUTTON, 0);
         this.unSelectedAtlasRegion = TextureConfig.getPlayScreenUITextureAtlas_findRegion(TextureAtlasKeys.PLAYSCREEN_OPTIONBUTTON, 1);
-        this.correctMask = TextureConfig.getPlayScreenUITextureAtlas_findRegion(TextureAtlasKeys.MASK_CORRECTOPTION);
-        this.wrongMask = TextureConfig.getPlayScreenUITextureAtlas_findRegion(TextureAtlasKeys.MASK_WRONGOPTION);
+        this.correctMask = TextureConfig.getMaskUITextureAtlas_findRegion(TextureAtlasKeys.MASK_CORRECTOPTION);
+        this.wrongMask = TextureConfig.getMaskUITextureAtlas_findRegion(TextureAtlasKeys.MASK_WRONGOPTION);
 
         buttonComponent.onClick.AddListener(() => {
             this.background.sprite = (selectedAtlasRegion);
@@ -55,6 +55,9 @@ public class OptionNode : MonoBehaviour
             this.showState = OptionButtonShowState.HIDE_WRONG;
         }
         this.maskActor.sprite = (null);
+        var tempColor = this.maskActor.color;
+        tempColor.a = 0f;
+        this.maskActor.color = tempColor;
     }
 
     public void updateShowStateToShow()
@@ -73,7 +76,9 @@ public class OptionNode : MonoBehaviour
         //this.setMask(new TextureRegionDrawable(texture));
 
         this.maskActor.sprite = (mask);
-
+        var tempColor = this.maskActor.color;
+        tempColor.a = 1f;
+        this.maskActor.color = tempColor;
         //this.setBackground(new TextureRegionDrawable(texture));
     }
 }

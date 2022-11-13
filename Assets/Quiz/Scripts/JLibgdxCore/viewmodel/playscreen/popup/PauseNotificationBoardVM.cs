@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PauseNotificationBoardVM : AbstractNotificationBoardVM<System.Object>
+public class PauseNotificationBoardVM : AbstractNotificationBoardVM<object>
 {
     MatchSituationView data;
     Image image;

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QuizGdxGame : BaseHundunGame<JQuizRootSaveData>
+public class QuizGdxGame : BaseHundunGame<QuizRootSaveData>
 {
     public static readonly int LOGIC_FRAME_PER_SECOND = 20;
     public static QuizGdxGame INSTANCE { get; private set; }
@@ -19,26 +19,26 @@ public class QuizGdxGame : BaseHundunGame<JQuizRootSaveData>
         libgdxGameCreate();
     }
 
-    class TempSaveTool : ISaveTool<JQuizRootSaveData>
+    class TempSaveTool : ISaveTool<QuizRootSaveData>
     {
-        bool ISaveTool<JQuizRootSaveData>.hasSave()
+        bool ISaveTool<QuizRootSaveData>.hasSave()
         {
             // FIXME
             return false;
         }
 
-        void ISaveTool<JQuizRootSaveData>.lazyInitOnGameCreate()
+        void ISaveTool<QuizRootSaveData>.lazyInitOnGameCreate()
         {
             // FIXME
         }
 
-        JQuizRootSaveData ISaveTool<JQuizRootSaveData>.readRootSaveData()
+        QuizRootSaveData ISaveTool<QuizRootSaveData>.readRootSaveData()
         {
             // FIXME
             return null;
         }
 
-        void ISaveTool<JQuizRootSaveData>.writeRootSaveData(JQuizRootSaveData saveData)
+        void ISaveTool<QuizRootSaveData>.writeRootSaveData(QuizRootSaveData saveData)
         {
             // FIXME
         }

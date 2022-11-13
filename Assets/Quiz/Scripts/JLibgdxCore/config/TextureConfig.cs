@@ -12,17 +12,22 @@ public class TextureConfig
         return Resources.Load<Sprite>(BASE_FOLDER + "playScreenAnimation/" + key + "_0");
     }
 
-    internal static Sprite getHistoryAreaVMBackgroundDrawable()
-    {
-        return Resources.Load<Sprite>(BASE_FOLDER + "testNinePatch");
-    }
-
     internal static Sprite getPlayScreenUITextureAtlas_findRegion(string atlasKeys)
     {
         switch (atlasKeys)
         {
             default:
                 return Resources.Load<Sprite>(BASE_FOLDER + "playScreenUI/" + atlasKeys);
+        }
+
+    }
+
+    internal static Sprite getMaskUITextureAtlas_findRegion(string atlasKeys)
+    {
+        switch (atlasKeys)
+        {
+            default:
+                return Resources.Load<Sprite>(BASE_FOLDER + "maskUI/" + atlasKeys);
         }
 
     }

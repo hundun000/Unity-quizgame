@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System;
-using static JQuizRootSaveData;
+using static QuizRootSaveData;
 using UnityEngine;
 
-public class JQuizSaveHandler : AbstractSaveHandler<JQuizRootSaveData>
+public class JQuizSaveHandler : AbstractSaveHandler<QuizRootSaveData>
 {
 
     bool gameSaveInited = false;
@@ -11,7 +11,7 @@ public class JQuizSaveHandler : AbstractSaveHandler<JQuizRootSaveData>
     List<ISubGameSaveHandler> subGameSaveHandlers = new List<ISubGameSaveHandler>();
     List<ISubSystemSettingHandler> subSystemSettingHandlers = new List<ISubSystemSettingHandler>();
 
-    public override void applyGameSaveData(JQuizRootSaveData saveData)
+    public override void applyGameSaveData(QuizRootSaveData saveData)
     {
         gameSaveInited = true;
         if (saveData.gameSaveData != null)
@@ -20,7 +20,7 @@ public class JQuizSaveHandler : AbstractSaveHandler<JQuizRootSaveData>
         }
     }
 
-    public override void applySystemSetting(JQuizRootSaveData rootSaveData)
+    public override void applySystemSetting(QuizRootSaveData rootSaveData)
     {
         systemSettingInited = true;
         if (rootSaveData.systemSetting != null)
@@ -29,15 +29,15 @@ public class JQuizSaveHandler : AbstractSaveHandler<JQuizRootSaveData>
         }
     }
 
-    public override JQuizRootSaveData currentSituationToSaveData()
+    public override QuizRootSaveData currentSituationToSaveData()
     {
         // FIXEM
         return null;
     }
 
-    public override JQuizRootSaveData genereateNewGameSaveData()
+    public override QuizRootSaveData genereateNewGameSaveData()
     {
-        JQuizRootSaveData rootSaveData = JQuizRootSaveData.Factory.newGame();
+        QuizRootSaveData rootSaveData = QuizRootSaveData.Factory.newGame();
         return rootSaveData;
     }
 

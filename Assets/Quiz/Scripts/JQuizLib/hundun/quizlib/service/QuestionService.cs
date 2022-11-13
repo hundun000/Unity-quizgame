@@ -72,8 +72,8 @@ namespace hundun.quizlib.service
         {
             SessionDataPackage sessionDataPackage = sessionService.getSessionDataPackage(sessionId);
             QuestionModel question = null;
-                int i = 0;  
-                if (sessionDataPackage.questionIds.isEmpty()) {
+            int i = 0;  
+            if (sessionDataPackage.questionIds.isEmpty()) {
                 throw new QuizgameException("题库已经空了", -1);
             }
             String questionId = sessionDataPackage.questionIds.get(i);

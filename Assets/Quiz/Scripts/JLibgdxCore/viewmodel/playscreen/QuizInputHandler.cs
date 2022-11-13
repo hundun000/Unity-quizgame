@@ -7,6 +7,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using static HistoryScreen;
+using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class QuizInputHandler : MonoBehaviour,
     CountdownClockVM.CallerAndCallback,
@@ -44,7 +47,7 @@ public class QuizInputHandler : MonoBehaviour,
             StartMatchEvent startMatchEvent = JavaFeatureForGwt.requireNonNull(owner.currentMatchSituationView.startMatchEvent);
             LibgdxFeatureExtension.log(this.GetType().Name, String.Format(
                     "startMatch by QuestionIds = {0}",
-                    startMatchEvent.questionIds
+                    string.Join(",", startMatchEvent.questionIds)
                     ));
             // optional more startMatchEvent handle
             owner.teamPrototypes = startMatchEvent.teamPrototypes;
@@ -165,28 +168,28 @@ public class QuizInputHandler : MonoBehaviour,
             questionOptionAreaVM.showAllOption();
 
             owner.animationQueueHandler.addAnimationTask((voidIt)=> owner.animationCallerAndCallback.callShowQuestionResultAnimation(answerResultEvent));
-            //owner.animationQueueHandler.addAnimationTask((voidIt) => owner.animationCallerAndCallback.callShowGeneralDelayAnimation(3.0f));
+            owner.animationQueueHandler.addAnimationTask((voidIt) => owner.animationCallerAndCallback.callShowGeneralDelayAnimation(3.0f));
 
-            //if (matchFinishEvent != null)
-            //{
-            //    animationQueueHandler.addAnimationTask(()->notificationCallerAndCallback.callShowMatchFinishConfirm());
-            //    animationQueueHandler.setAfterAllAnimationDoneTask(()-> {
-            //        handleCurrentTeam(false);
-            //        handelExitAsFinishMatch(toHistory());
-            //    });
-            //}
-            //else
-            //{
-            //    if (switchTeamEvent != null)
-            //    {
-            //        animationQueueHandler.addAnimationTask(()->animationCallerAndCallback.callShowTeamSwitchAnimation(switchTeamEvent));
-            //    }
-            //    animationQueueHandler.setAfterAllAnimationDoneTask(()-> {
-            //        // --- quiz logic ---
-            //        handleCurrentTeam(false);
-            //        handleNewQuestion();
-            //    });
-            //}
+            if (matchFinishEvent != null)
+            {
+                owner.animationQueueHandler.addAnimationTask((voidIt) => owner.notificationCallerAndCallback.callShowMatchFinishConfirm());
+                owner.animationQueueHandler.afterAllAnimationDoneTask = ((voidIt) => {
+                    handleCurrentTeam(false);
+                    handelExitAsFinishMatch(toHistory());
+                });
+            }
+            else
+            {
+                if (switchTeamEvent != null)
+                {
+                    owner.animationQueueHandler.addAnimationTask((voidIt) => owner.animationCallerAndCallback.callShowTeamSwitchAnimation(switchTeamEvent));
+                }
+                owner.animationQueueHandler.afterAllAnimationDoneTask = ((voidIt) => {
+                    // --- quiz logic ---
+                    handleCurrentTeam(false);
+                    handleNewQuestion();
+                });
+            }
             owner.animationQueueHandler.checkNextAnimation();
 
 
@@ -197,4 +200,32 @@ public class QuizInputHandler : MonoBehaviour,
         }
     }
 
+    public MatchHistoryDTO toHistory()
+    {
+
+        MatchHistoryDTO history = new MatchHistoryDTO();
+        history.data = (owner.currentMatchSituationView.teamRuntimeInfos
+                .ToDictionary(
+                        teamRuntimeInfo =>teamRuntimeInfo.name,
+                        teamRuntimeInfo =>teamRuntimeInfo.matchScore
+                        )
+                );
+        return history;
+    }
+
+    internal void handelExitAsFinishMatch(MatchHistoryDTO history)
+    {
+        exitClear();
+
+        LibgdxFeatureExtension.SetScreenChangePushParams(new object[] { history });
+        SceneManager.LoadScene("HistoryScene");
+    }
+
+    private void exitClear()
+    {
+        owner.matchConfig = null;
+        owner.currentMatchSituationView = null;
+
+        owner.animationQueueHandler.clear();
+    }
 }

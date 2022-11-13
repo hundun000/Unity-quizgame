@@ -60,7 +60,7 @@ namespace hundun.quizlib
 
         public static bool isEmpty<T>(this ICollection<T> c)
         {
-            return c.Count > 0;
+            return c.Count == 0;
         }
 
         public static void Shuffle<T>(this IList<T> list, Random random)

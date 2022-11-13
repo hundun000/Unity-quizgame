@@ -24,16 +24,8 @@ public class TeamInfoBoardVM : MonoBehaviour
         this._nodesRoot = this.transform.Find("_nodesRoot").gameObject;
     }
 
-    public void postPrefabInitialization(
-            QuizGdxGame game
-            )
+    public void updateTeamPrototype(List<TeamPrototype> teamPrototypes)
     {
-        this.GetComponent<Image>().sprite = TextureConfig.getHistoryAreaVMBackgroundDrawable();
-        this.game = game;
-    }
-
-public void updateTeamPrototype(List<TeamPrototype> teamPrototypes)
-{
 
     _nodesRoot.transform.AsTableClear();
     nodes.Clear();

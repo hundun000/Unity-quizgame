@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
-using static JQuizRootSaveData;
+using static QuizRootSaveData;
 using static JQuizSaveHandler;
 
 public class QuizLibBridge : IFrontEnd, ISubGameSaveHandler

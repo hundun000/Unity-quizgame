@@ -5,26 +5,31 @@ using UnityEngine;
 using UnityEngine.VFX;
 
 public class AnimationCallerAndCallbackDelegation : MonoBehaviour,
-    QuestionResultAnimationVM.CallerAndCallback
+    QuestionResultAnimationVM.CallerAndCallback,
+    GeneralDelayAnimationVM.CallerAndCallback
 {
     // --- runtime add to stage ---
     QuestionResultAnimationVM questionResultAnimationVM;
     //TeamSwitchAnimationVM teamSwitchAnimationVM;
     //SkillAnimationVM skillAnimationVM;
-    //GeneralDelayAnimationVM generalDelayAnimationVM;
+    GeneralDelayAnimationVM generalDelayAnimationVM;
     PlayScreen owner;
     GameObject _questionResultAnimationVM;
+    GameObject _generalDelayAnimationVM;
 
     void Awake()
     {
         this.owner = this.GetComponentInParent<PlayScreen>();
         this._questionResultAnimationVM = owner.PopoupRoot.transform.Find("_questionResultAnimationVM").gameObject;
+        this._generalDelayAnimationVM = owner.PopoupRoot.transform.Find("_generalDelayAnimationVM").gameObject;
         this.questionResultAnimationVM = _questionResultAnimationVM.GetComponent<QuestionResultAnimationVM>();
+        this.generalDelayAnimationVM = _generalDelayAnimationVM.GetComponent<GeneralDelayAnimationVM>();
     }
 
     void Start()
     {
         questionResultAnimationVM.postPrefabInitialization(owner.game, this);
+        generalDelayAnimationVM.postPrefabInitialization(owner.game, this);
     }
 
     public void callShowQuestionResultAnimation(AnswerResultEvent answerResultEvent)
@@ -73,4 +78,13 @@ public class AnimationCallerAndCallbackDelegation : MonoBehaviour,
         animationVM.callShow(arg);
     }
 
+    public void callShowGeneralDelayAnimation(float delaySecond)
+    {
+        generalCallShowAnimation(_generalDelayAnimationVM, generalDelayAnimationVM, delaySecond, true);
+    }
+
+    internal void callShowTeamSwitchAnimation(SwitchTeamEvent switchTeamEvent)
+    {
+        throw new NotImplementedException();
+    }
 }

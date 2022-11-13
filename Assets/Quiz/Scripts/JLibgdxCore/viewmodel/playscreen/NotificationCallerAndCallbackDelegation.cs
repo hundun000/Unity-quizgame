@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static HistoryScreen;
 
 public class NotificationCallerAndCallbackDelegation : MonoBehaviour,
-    PauseNotificationBoardVM.CallerAndCallback
+    PauseNotificationBoardVM.CallerAndCallback,
+    MatchFinishNotificationBoardVM.CallerAndCallback
 {
 
     Action<object> afterComfirmTask;
@@ -13,15 +15,18 @@ public class NotificationCallerAndCallbackDelegation : MonoBehaviour,
     PlayScreen owner;
 
     PauseNotificationBoardVM pauseNotificationBoardVM;
-    //MatchFinishNotificationBoardVM waitConfirmMatchFinishMaskBoardVM;
+    MatchFinishNotificationBoardVM waitConfirmMatchFinishMaskBoardVM;
 
     GameObject _pauseNotificationBoardVM;
+    GameObject _waitConfirmMatchFinishMaskBoardVM;
 
     void Awake()
     {
         this.owner = this.GetComponentInParent<PlayScreen>();
         this._pauseNotificationBoardVM = owner.PopoupRoot.transform.Find("_pauseNotificationBoardVM").gameObject;
+        this._waitConfirmMatchFinishMaskBoardVM = owner.PopoupRoot.transform.Find("_waitConfirmMatchFinishMaskBoardVM").gameObject;
         this.pauseNotificationBoardVM = _pauseNotificationBoardVM.GetComponent<PauseNotificationBoardVM>();
+        this.waitConfirmMatchFinishMaskBoardVM = _waitConfirmMatchFinishMaskBoardVM.GetComponent<MatchFinishNotificationBoardVM>();
     }
 
 
@@ -72,5 +77,19 @@ public class NotificationCallerAndCallbackDelegation : MonoBehaviour,
         // --- for notificationBoardVM ---
         this.afterComfirmTask = afterComfirmTask;
         notificationBoardVM.onCallShow(arg);
+    }
+
+
+    public void callShowMatchFinishConfirm()
+    {
+        MatchHistoryDTO history = owner.quizInputHandler.toHistory();
+        generalCallShowNotificationBoard(
+                    _waitConfirmMatchFinishMaskBoardVM,
+                    waitConfirmMatchFinishMaskBoardVM,
+                    history,
+                    (voidIt) => {
+                        owner.quizInputHandler.handelExitAsFinishMatch(history);
+                    }
+                    );
     }
 }

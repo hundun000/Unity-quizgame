@@ -1,8 +1,9 @@
 using hundun.quizlib.prototype;
 using System.Collections.Generic;
 using System;
+using static HistoryScreen;
 
-public class JQuizRootSaveData
+public class QuizRootSaveData
 {
 
     public MyGameSaveData gameSaveData;
@@ -11,7 +12,7 @@ public class JQuizRootSaveData
     public class MyGameSaveData
     {
         public List<TeamPrototype> teamPrototypes;
-        public List<JMatchHistoryDTO> matchFinishHistories;
+        public List<MatchHistoryDTO> matchFinishHistories;
     }
 
     public class SystemSetting
@@ -21,13 +22,13 @@ public class JQuizRootSaveData
 
     public class Factory
     {
-        public static JQuizRootSaveData newGame()
+        public static QuizRootSaveData newGame()
         {
-            var result = new JQuizRootSaveData();
+            var result = new QuizRootSaveData();
 
             var myGameSaveData = new MyGameSaveData();
             myGameSaveData.teamPrototypes = (null);
-            myGameSaveData.matchFinishHistories = (new List<JMatchHistoryDTO>());
+            myGameSaveData.matchFinishHistories = (new List<MatchHistoryDTO>());
             result.gameSaveData = myGameSaveData;
             var systemSetting = new SystemSetting();
             result.systemSetting = systemSetting;
