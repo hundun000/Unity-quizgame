@@ -4,7 +4,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class JTeamNodeVM : MonoBehaviour
+public class TeamNodeVM : MonoBehaviour
 {
     public const int NODE_WIDTH = 500;
     public const int NODE_HEIGHT = 100;

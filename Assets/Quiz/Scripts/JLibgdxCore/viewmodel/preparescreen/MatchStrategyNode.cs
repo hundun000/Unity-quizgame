@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class JMatchStrategyNode : MonoBehaviour
+public class MatchStrategyNode : MonoBehaviour
 {
 
     internal MatchStrategyType type;
@@ -32,7 +32,7 @@ public class JMatchStrategyNode : MonoBehaviour
         //rectTransform.sizeDelta = new Vector2(NAME_WIDTH - rectTransform.rect.width, SIGN_SIZE - rectTransform.rect.height);
     }
 
-    internal void postPrefabInitialization(JMatchStrategySelectVM parent)
+    internal void postPrefabInitialization(MatchStrategySelectVM parent)
     {
         this.GetComponent<Button>().onClick.AddListener(() => parent.checkSlotNum(this.type));
     }
@@ -40,7 +40,7 @@ public class JMatchStrategyNode : MonoBehaviour
     internal void updatePrototype(MatchStrategyType type)
     {
         this.type = type;
-        _nameLabel.text = (JMatchStrategyInfoVM.toMatchStrategyTypeChinese(type));
+        _nameLabel.text = (MatchStrategyInfoVM.toMatchStrategyTypeChinese(type));
     }
 
     internal void updateRuntime(bool isCurrent)

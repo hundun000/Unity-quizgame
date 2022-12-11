@@ -7,9 +7,9 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using static JTeamManageAreaVM;
+using static TeamManageAreaVM;
 
-public class JTagSelectPopoupVM : JAbstractSelectPopoupVM<JTagManageSlotVM>
+public class TagSelectPopoupVM : AbstractSelectPopoupVM<TagManageSlotVM>
 {
 
     Button _doneButton;
@@ -22,7 +22,7 @@ public class JTagSelectPopoupVM : JAbstractSelectPopoupVM<JTagManageSlotVM>
     {
         base.Awake();
 
-        this.callback = this.GetComponentInParent<JPrepareScreen>();
+        this.callback = this.GetComponentInParent<PrepareScreen>();
         this._doneButton = this.transform.Find("_doneButton").gameObject.GetComponent<Button>();
 
         var listener = new TagSelectDoneClickListener(this);
@@ -36,13 +36,13 @@ public class JTagSelectPopoupVM : JAbstractSelectPopoupVM<JTagManageSlotVM>
             .Select(tag => 
             {
                 GameObject vmInstance = Instantiate(candidateVMPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-                JTagManageSlotVM vm = vmInstance.GetComponent<JTagManageSlotVM>();
+                TagManageSlotVM vm = vmInstance.GetComponent<TagManageSlotVM>();
 
                 vm.updateData(tag, currenTeamPrototype);
                 return Tuple.Create(vm, vmInstance);
             })
             .ToList();
-        List<JTagManageSlotVM> candidateVMs = candidateVMsAndCandidateVMInstances
+        List<TagManageSlotVM> candidateVMs = candidateVMsAndCandidateVMInstances
             .Select(tuple => tuple.Item1)
             .ToList()
             ;
@@ -55,9 +55,9 @@ public class JTagSelectPopoupVM : JAbstractSelectPopoupVM<JTagManageSlotVM>
 
     public class TagSelectDoneClickListener
     {
-        JTagSelectPopoupVM owner;
+        TagSelectPopoupVM owner;
 
-        internal TagSelectDoneClickListener(JTagSelectPopoupVM owner) {
+        internal TagSelectDoneClickListener(TagSelectPopoupVM owner) {
             this.owner = owner;
         }
 

@@ -47,7 +47,7 @@ public class SkillEffectHandler : MonoBehaviour
     internal void handleHelp(List<String> args)
     {
         int addSecond = Int32.Parse(args.get(0));
-        owner.quizInputHandler.countdownClockVM.updateCoutdownSecond(addSecond);
+        owner.quizInputHandler.countdownClockVM.updateCoutdownSecond(owner.logicFrameHelper.secondToFrameNum(addSecond));
     }
 
     internal void handleSkip(List<String> args)

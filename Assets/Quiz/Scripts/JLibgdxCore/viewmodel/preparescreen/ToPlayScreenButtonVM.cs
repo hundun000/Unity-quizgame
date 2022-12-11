@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class JToPlayScreenButtonVM : MonoBehaviour
+public class ToPlayScreenButtonVM : MonoBehaviour
 {
     private Image _imageComponent;
     
@@ -13,12 +13,12 @@ public class JToPlayScreenButtonVM : MonoBehaviour
     private Sprite disableDrawable;
     private bool touchable;
 
-    JPrepareScreen screen;
+    PrepareScreen screen;
     Button button;
     // Start is called before the first frame update
     void Awake()
     {
-        this.screen = this.GetComponentInParent<JPrepareScreen>();
+        this.screen = this.GetComponentInParent<PrepareScreen>();
         this._imageComponent = this.GetComponent<Image>();
 
         enableDrawable = TextureConfig.getPlayScreenUITextureAtlas_findRegion(TextureAtlasKeys.PLAYSCREEN_EMPTY_BUTTON);

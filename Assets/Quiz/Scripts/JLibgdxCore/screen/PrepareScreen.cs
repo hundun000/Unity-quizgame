@@ -7,12 +7,12 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static JMatchStrategySelectVM;
+using static MatchStrategySelectVM;
 
-public class JPrepareScreen : BaseHundunScreen,
-    JTeamSelectPopoupVM.IWaitTeamSelectCallback,
-    JTagSelectPopoupVM.IWaitTagSelectCallback,
-    JTeamManageAreaVM.ICallerAndCallback,
+public class PrepareScreen : BaseHundunScreen,
+    TeamSelectPopoupVM.IWaitTeamSelectCallback,
+    TagSelectPopoupVM.IWaitTagSelectCallback,
+    TeamManageAreaVM.ICallerAndCallback,
     IMatchStrategyChangeListener
 {
 
@@ -24,13 +24,13 @@ public class JPrepareScreen : BaseHundunScreen,
     public String currentQuestionPackageName;
     public List<String> selectedTeamNames;
 
-    private JTeamSelectPopoupVM teamSelectPopoupVM;
-    private JTagSelectPopoupVM tagSelectPopoupVM;
-    private JMatchStrategySelectVM matchStrategySelectVM;
-    private JTeamManageAreaVM teamManageAreaVM;
-    private JMatchStrategyInfoVM matchStrategyInfoVM;
-    private JToPlayScreenButtonVM toPlayScreenButtonVM;
-    private JToMenuScreenButtonVM toMenuScreenButtonVM;
+    private TeamSelectPopoupVM teamSelectPopoupVM;
+    private TagSelectPopoupVM tagSelectPopoupVM;
+    private MatchStrategySelectVM matchStrategySelectVM;
+    private TeamManageAreaVM teamManageAreaVM;
+    private MatchStrategyInfoVM matchStrategyInfoVM;
+    private ToPlayScreenButtonVM toPlayScreenButtonVM;
+    private ToMenuScreenButtonVM toMenuScreenButtonVM;
 
     // ------ unity adapter member ------
     private GameObject _teamSelectPopoupVM;
@@ -55,13 +55,13 @@ public class JPrepareScreen : BaseHundunScreen,
         _toPlayScreenButtonVM = this.UiRoot.transform.Find("_toPlayScreenButtonVM").gameObject;
         _toMenuScreenButtonVM = this.UiRoot.transform.Find("_toMenuScreenButtonVM").gameObject;
 
-        teamSelectPopoupVM = _teamSelectPopoupVM.GetComponent<JTeamSelectPopoupVM>();
-        tagSelectPopoupVM = _tagSelectPopoupVM.GetComponent<JTagSelectPopoupVM>();
-        matchStrategySelectVM = _matchStrategySelectVM.GetComponent<JMatchStrategySelectVM>();
-        teamManageAreaVM = _teamManageAreaVM.GetComponent<JTeamManageAreaVM>();
-        matchStrategyInfoVM = _matchStrategyInfoVM.GetComponent<JMatchStrategyInfoVM>();
-        toPlayScreenButtonVM = _toPlayScreenButtonVM.GetComponent<JToPlayScreenButtonVM>();
-        toMenuScreenButtonVM = _toMenuScreenButtonVM.GetComponent<JToMenuScreenButtonVM>();
+        teamSelectPopoupVM = _teamSelectPopoupVM.GetComponent<TeamSelectPopoupVM>();
+        tagSelectPopoupVM = _tagSelectPopoupVM.GetComponent<TagSelectPopoupVM>();
+        matchStrategySelectVM = _matchStrategySelectVM.GetComponent<MatchStrategySelectVM>();
+        teamManageAreaVM = _teamManageAreaVM.GetComponent<TeamManageAreaVM>();
+        matchStrategyInfoVM = _matchStrategyInfoVM.GetComponent<MatchStrategyInfoVM>();
+        toPlayScreenButtonVM = _toPlayScreenButtonVM.GetComponent<ToPlayScreenButtonVM>();
+        toMenuScreenButtonVM = _toMenuScreenButtonVM.GetComponent<ToMenuScreenButtonVM>();
 
     }
 
@@ -94,30 +94,30 @@ public class JPrepareScreen : BaseHundunScreen,
     {
         if (selectedTeamNames != null && selectedTeamNames.Count == targetTeamNum)
         {
-            _toPlayScreenButtonVM.GetComponent<JToPlayScreenButtonVM>().JsetTouchable(true);
+            _toPlayScreenButtonVM.GetComponent<ToPlayScreenButtonVM>().JsetTouchable(true);
         }
         else
         {
-            _toPlayScreenButtonVM.GetComponent<JToPlayScreenButtonVM>().JsetTouchable(false);
+            _toPlayScreenButtonVM.GetComponent<ToPlayScreenButtonVM>().JsetTouchable(false);
         }
     }
 
-    void JTeamManageAreaVM.ICallerAndCallback.onTeamWantChange(JTeamManageSlotVM teamSlotVM)
+    void TeamManageAreaVM.ICallerAndCallback.onTeamWantChange(TeamManageSlotVM teamSlotVM)
     {
         teamManageAreaVM.onTeamWantChangeOrModify(teamSlotVM);
-        ((JTeamSelectPopoupVM.IWaitTeamSelectCallback)this).callShowTeamSelectPopoup();
+        ((TeamSelectPopoupVM.IWaitTeamSelectCallback)this).callShowTeamSelectPopoup();
     }
 
-    void JTeamManageAreaVM.ICallerAndCallback.onTeamWantModify(JTeamManageSlotVM teamSlotVM)
+    void TeamManageAreaVM.ICallerAndCallback.onTeamWantModify(TeamManageSlotVM teamSlotVM)
     {
         teamManageAreaVM.onTeamWantChangeOrModify(teamSlotVM);
-        ((JTagSelectPopoupVM.IWaitTagSelectCallback)this).callShowTagSelectPopoup(
+        ((TagSelectPopoupVM.IWaitTagSelectCallback)this).callShowTagSelectPopoup(
             teamSlotVM.data, 
             questionService.getTags(currentQuestionPackageName)
             );
     }
 
-    void JTeamSelectPopoupVM.IWaitTeamSelectCallback.callShowTeamSelectPopoup()
+    void TeamSelectPopoupVM.IWaitTeamSelectCallback.callShowTeamSelectPopoup()
     {
         // --- ui ---
         _teamSelectPopoupVM.SetActive(true);
@@ -126,7 +126,7 @@ public class JPrepareScreen : BaseHundunScreen,
         teamSelectPopoupVM.callShow(teamService.listTeams());
     }
 
-    void JTeamSelectPopoupVM.IWaitTeamSelectCallback.onTeamSelectDone(TeamPrototype currenTeamPrototype)
+    void TeamSelectPopoupVM.IWaitTeamSelectCallback.onTeamSelectDone(TeamPrototype currenTeamPrototype)
     {
         // --- ui ---
         foreach (Transform child in this.PopoupRoot.transform)
@@ -160,7 +160,7 @@ public class JPrepareScreen : BaseHundunScreen,
         teamManageAreaVM.updateSlotNum(targetTeamNum);
     }
 
-    void JTagSelectPopoupVM.IWaitTagSelectCallback.callShowTagSelectPopoup(TeamPrototype currenTeamPrototype, HashSet<string> allTags)
+    void TagSelectPopoupVM.IWaitTagSelectCallback.callShowTagSelectPopoup(TeamPrototype currenTeamPrototype, HashSet<string> allTags)
     {
         // --- ui ---
         _tagSelectPopoupVM.SetActive(true);
@@ -169,7 +169,7 @@ public class JPrepareScreen : BaseHundunScreen,
         tagSelectPopoupVM.callShow(currenTeamPrototype, allTags);
     }
 
-    void JTagSelectPopoupVM.IWaitTagSelectCallback.onTagSelectDone(TeamPrototype currenTeamPrototype)
+    void TagSelectPopoupVM.IWaitTagSelectCallback.onTagSelectDone(TeamPrototype currenTeamPrototype)
     {
         // --- ui ---
         foreach (Transform child in this.PopoupRoot.transform)

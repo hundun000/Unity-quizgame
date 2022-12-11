@@ -6,12 +6,12 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class JTeamManageAreaVM : MonoBehaviour
+public class TeamManageAreaVM : MonoBehaviour
 {
     ICallerAndCallback callerAndCallback;
 
-    List<JTeamManageSlotVM> teamSlotVMs = new List<JTeamManageSlotVM>();
-    JTeamManageSlotVM operatingSlotVM;
+    List<TeamManageSlotVM> teamSlotVMs = new List<TeamManageSlotVM>();
+    TeamManageSlotVM operatingSlotVM;
 
     // ------ unity adapter member ------
     public GameObject teamManageSlotVMPrefab;
@@ -19,7 +19,7 @@ public class JTeamManageAreaVM : MonoBehaviour
 
     void Awake()
     {
-        this.callerAndCallback = this.GetComponentInParent<JPrepareScreen>();
+        this.callerAndCallback = this.GetComponentInParent<PrepareScreen>();
         this._scrollViewContent = this.transform.Find("_content").gameObject;
     }
 
@@ -34,7 +34,7 @@ public class JTeamManageAreaVM : MonoBehaviour
             for (int i = 0; i < targetSlotNum; i++)
             {
 
-                JTeamManageSlotVM vm = _scrollViewContent.transform.AsTableAdd<JTeamManageSlotVM>(teamManageSlotVMPrefab);
+                TeamManageSlotVM vm = _scrollViewContent.transform.AsTableAdd<TeamManageSlotVM>(teamManageSlotVMPrefab);
                 vm.postPrefabInitialization(callerAndCallback);
 
                 teamSlotVMs.Add(vm);
@@ -56,11 +56,11 @@ public class JTeamManageAreaVM : MonoBehaviour
 
     public interface ICallerAndCallback
     {
-        void onTeamWantChange(JTeamManageSlotVM teamSlotVM);
-        void onTeamWantModify(JTeamManageSlotVM teamSlotVM);
+        void onTeamWantChange(TeamManageSlotVM teamSlotVM);
+        void onTeamWantModify(TeamManageSlotVM teamSlotVM);
     }
 
-    public void onTeamWantChangeOrModify(JTeamManageSlotVM teamSlotVM)
+    public void onTeamWantChangeOrModify(TeamManageSlotVM teamSlotVM)
     {
         this.operatingSlotVM = teamSlotVM;
     }

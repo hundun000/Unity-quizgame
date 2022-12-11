@@ -58,6 +58,11 @@ public class TextureConfig
 
     }
 
+    internal static Sprite getMyNinePatch()
+    {
+        return Resources.Load<Sprite>(BASE_ADAPTER_FOLDER + "myNinePatch");
+    }
+
     internal static Sprite getMaskUITextureAtlas_findRegion(string atlasKeys)
     {
         switch (atlasKeys)

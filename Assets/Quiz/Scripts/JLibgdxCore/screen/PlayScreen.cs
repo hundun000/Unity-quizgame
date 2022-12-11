@@ -56,7 +56,7 @@ public class PlayScreen : BaseHundunScreen
         MatchConfig matchConfig = new MatchConfig();
         matchConfig.matchStrategyType = MatchStrategyType.MAIN;
         matchConfig.teamNames = new List<string> { LibDataConfiguration.ZACA_TEAM_NAME_1, LibDataConfiguration.ZACA_TEAM_NAME_2 };
-        matchConfig.questionPackageName = QuestionLoaderService.PRELEASE_PACKAGE_NAME;
+        matchConfig.questionPackageName = QuestionLoaderService.RELEASE_PACKAGE_NAME;
 
         LibgdxFeatureExtension.SetScreenChangePushParams(new System.Object[] { matchConfig });
 

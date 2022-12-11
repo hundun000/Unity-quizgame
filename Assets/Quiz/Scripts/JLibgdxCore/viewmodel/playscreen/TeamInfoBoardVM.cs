@@ -17,11 +17,12 @@ public class TeamInfoBoardVM : MonoBehaviour
     GameObject _nodesRoot;
     GameObject teamInfoNodePrefab;
 
-
     void Awake()
     {
         this.teamInfoNodePrefab = this.transform.Find("_templates/teamInfoNodePrefab").gameObject;
         this._nodesRoot = this.transform.Find("_nodesRoot").gameObject;
+
+        this.GetComponent<Image>().sprite = TextureConfig.getMyNinePatch();
     }
 
     public void updateTeamPrototype(List<TeamPrototype> teamPrototypes)

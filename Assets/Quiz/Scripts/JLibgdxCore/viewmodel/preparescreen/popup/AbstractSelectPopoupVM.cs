@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
- public abstract class JAbstractSelectPopoupVM<T> : MonoBehaviour
+ public abstract class AbstractSelectPopoupVM<T> : MonoBehaviour
 {
 
 

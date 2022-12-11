@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class JTeamSelectPopoupVM : JAbstractSelectPopoupVM<JTeamNodeVM>
+public class TeamSelectPopoupVM : AbstractSelectPopoupVM<TeamNodeVM>
 {
 
     IWaitTeamSelectCallback callback;
@@ -21,7 +21,7 @@ public class JTeamSelectPopoupVM : JAbstractSelectPopoupVM<JTeamNodeVM>
     {
         base.Awake();
 
-        this.callback = this.GetComponentInParent<JPrepareScreen>();
+        this.callback = this.GetComponentInParent<PrepareScreen>();
         this._doneButton = this.transform.Find("_doneButton").gameObject.GetComponent<Button>();
 
         TeamSelectClickListener listener = new TeamSelectClickListener(callback, null);
@@ -34,8 +34,8 @@ public class JTeamSelectPopoupVM : JAbstractSelectPopoupVM<JTeamNodeVM>
     public class TeamSelectClickListener
     {
         IWaitTeamSelectCallback callback;
-        JTeamNodeVM teamNodeVM;
-        internal TeamSelectClickListener(IWaitTeamSelectCallback callback, JTeamNodeVM teamNodeVM) {
+        TeamNodeVM teamNodeVM;
+        internal TeamSelectClickListener(IWaitTeamSelectCallback callback, TeamNodeVM teamNodeVM) {
             this.callback = callback;
             this.teamNodeVM = teamNodeVM;
         }
@@ -58,7 +58,7 @@ public class JTeamSelectPopoupVM : JAbstractSelectPopoupVM<JTeamNodeVM>
             .Select(teamPrototype =>
             {
                 GameObject vmInstance = Instantiate(candidateVMPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-                JTeamNodeVM vm = vmInstance.GetComponent<JTeamNodeVM>();
+                TeamNodeVM vm = vmInstance.GetComponent<TeamNodeVM>();
                 vm.postPrefabInitialization(teamPrototype);
 
                 TeamSelectClickListener listener = new TeamSelectClickListener(callback, vm);
@@ -68,7 +68,7 @@ public class JTeamSelectPopoupVM : JAbstractSelectPopoupVM<JTeamNodeVM>
             })
             .ToList()
             ;
-        List<JTeamNodeVM> candidateVMs = candidateVMsAndCandidateVMInstances
+        List<TeamNodeVM> candidateVMs = candidateVMsAndCandidateVMInstances
             .Select(tuple => tuple.Item1)
             .ToList()
             ;

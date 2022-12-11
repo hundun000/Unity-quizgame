@@ -4,11 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class JMenuScreen : BaseHundunScreen
+public class MenuScreen : BaseHundunScreen
 {
-    int BUTTON_WIDTH = 100;
-    int BUTTON_BIG_HEIGHT = 100;
-    int BUTTON_SMALL_HEIGHT = 75;
+    //int BUTTON_WIDTH = 100;
+    //int BUTTON_BIG_HEIGHT = 100;
+    //int BUTTON_SMALL_HEIGHT = 75;
 
     GameObject _title;
     GameObject _buttonContinueGamePrefab;

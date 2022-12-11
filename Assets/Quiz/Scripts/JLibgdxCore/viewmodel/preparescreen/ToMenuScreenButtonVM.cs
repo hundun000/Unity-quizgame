@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class JToMenuScreenButtonVM : MonoBehaviour
+public class ToMenuScreenButtonVM : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()

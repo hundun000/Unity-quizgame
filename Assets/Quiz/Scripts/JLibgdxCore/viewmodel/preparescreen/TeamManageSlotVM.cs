@@ -4,9 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static JTeamManageAreaVM;
+using static TeamManageAreaVM;
 
-public class JTeamManageSlotVM : MonoBehaviour
+public class TeamManageSlotVM : MonoBehaviour
 {
 
     public TeamPrototype data { get; private set; }
@@ -33,7 +33,7 @@ public class JTeamManageSlotVM : MonoBehaviour
 
     void Awake()
     {
-        this._noTeamLabelPrefab = GameObject.FindObjectOfType<JPrepareScreen>().Templates.transform.Find("_noTeamLabelPrefab").gameObject;
+        this._noTeamLabelPrefab = GameObject.FindObjectOfType<PrepareScreen>().Templates.transform.Find("_noTeamLabelPrefab").gameObject;
         this._teamNodeAreaContainer = this.transform.Find("_teamNodeAreaContainer").gameObject;
         this._changeTeamButton = this.transform.Find("_changeTeamButtonCell/_changeTeamButton").gameObject.GetComponent<Button>();
         this._modifyTeamButton = this.transform.Find("_modifyTeamButtonCell/_modifyTeamButton").gameObject.GetComponent<Button>();
@@ -70,7 +70,7 @@ public class JTeamManageSlotVM : MonoBehaviour
         if (data != null)
         {
 
-            JTeamNodeVM vm = _teamNodeAreaContainer.transform.AsTableAdd<JTeamNodeVM>(teamNodeVMPrefab);
+            TeamNodeVM vm = _teamNodeAreaContainer.transform.AsTableAdd<TeamNodeVM>(teamNodeVMPrefab);
             vm.postPrefabInitialization(data);
 
             _modifyTeamButton.enabled = true;

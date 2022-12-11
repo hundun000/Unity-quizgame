@@ -4,7 +4,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class JTagManageSlotVM : MonoBehaviour
+public class TagManageSlotVM : MonoBehaviour
 {
     public static readonly int NODE_WIDTH = 800;
     public static readonly int NODE_HEIGHT = 100;

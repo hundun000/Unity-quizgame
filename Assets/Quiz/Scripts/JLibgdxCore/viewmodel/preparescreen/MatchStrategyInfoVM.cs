@@ -8,7 +8,7 @@ using System.Xml;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class JMatchStrategyInfoVM : MonoBehaviour
+public class MatchStrategyInfoVM : MonoBehaviour
 {
 
     internal Text nameLabel;

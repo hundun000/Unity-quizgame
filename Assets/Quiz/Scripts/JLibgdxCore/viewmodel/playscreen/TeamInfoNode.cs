@@ -23,6 +23,8 @@ public class TeamInfoNode : MonoBehaviour
         this.teamInfoLabel2 = this.transform.Find("_teamInfoLabelGroup/_teamInfoLabel2").gameObject.GetComponent<Text>();
 
         this.signDrawable = TextureConfig.getPlayScreenUITextureAtlas_findRegion(TextureAtlasKeys.pLAYSCREEN_CURRENTTEAMSIGN_BLACK);
+        
+        signSlotImage.sprite = signDrawable;
     }
 
 
@@ -37,25 +39,25 @@ public class TeamInfoNode : MonoBehaviour
     {
         if (isCurrent)
         {
-            signSlotImage.sprite = (signDrawable);
+            signSlotImage.enabled = true;
         }
         else
         {
-            signSlotImage.sprite = (null);
+            signSlotImage.enabled = false;
         }
         String healthInfoText;
         switch (matchStrategyType)
         {
             case MatchStrategyType.PRE:
                 healthInfoText = String.Format(
-                        "剩余题数：{0}  分数：{1}",
+                        "鍓╀綑棰樻暟锛歿0}  鍒嗘暟锛歿1}",
                         runtimeView.health,
                         runtimeView.matchScore
                         );
                 break;
             case MatchStrategyType.MAIN:
                 healthInfoText = String.Format(
-                        "剩余生命：{0}  分数：{1}",
+                        "鍓╀綑鐢熷懡锛歿0}  鍒嗘暟锛歿1}",
                         runtimeView.health,
                         runtimeView.matchScore
                         );
