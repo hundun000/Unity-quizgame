@@ -21,15 +21,21 @@ public static class LibgdxFeatureExtension
 
     public static T AsTableAdd<T>(this Transform thiz, GameObject prefab)
     {
-        GameObject vmInstance = GameObject.Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity);
-        vmInstance.transform.SetParent(thiz.transform);
-        vmInstance.transform.localPosition = new Vector3(0, 0, 0);
+        GameObject vmInstance = AsTableAddGameobject(thiz, prefab);
         T vm = vmInstance.GetComponent<T>();
         if (vm == null)
         {
             throw new Exception("vmInstance.GetComponent<T> is null, maybe forget add Component");
         }
         return vm;
+    }
+
+    public static GameObject AsTableAddGameobject(this Transform thiz, GameObject prefab)
+    {
+        GameObject vmInstance = GameObject.Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity);
+        vmInstance.transform.SetParent(thiz.transform);
+        vmInstance.transform.localPosition = new Vector3(0, 0, 0);
+        return vmInstance;
     }
 
     public static void SetScreenChangePushParams(System.Object[] pushParams)

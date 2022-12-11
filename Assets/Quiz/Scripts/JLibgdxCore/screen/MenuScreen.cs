@@ -10,40 +10,25 @@ public class MenuScreen : BaseHundunScreen
     //int BUTTON_BIG_HEIGHT = 100;
     //int BUTTON_SMALL_HEIGHT = 75;
 
-    GameObject _title;
-    GameObject _buttonContinueGamePrefab;
-    GameObject _buttonNewGamePrefab;
-    GameObject _buttonHistorySreenPrefab;
+    Image title;
+    GameObject _buttonContinueGame;
+    GameObject _buttonNewGame;
+    GameObject _buttonHistoryScreen;
 
     // ------ unity adapter member ------
     protected GameObject _buttonAreaRoot;
-
 
     override protected void Awake()
     {
         base.Awake();
 
         this._buttonAreaRoot = this.UiRoot.transform.Find("_buttonAreaRoot").gameObject;
-        this._title = this.UiRoot.transform.Find("_title").gameObject;
-        this._buttonContinueGamePrefab = this.Templates.transform.Find("_buttonAreaRoot").gameObject;
-        this._buttonNewGamePrefab = this.Templates.transform.Find("_buttonAreaRoot").gameObject;
-        this._buttonHistorySreenPrefab = this.Templates.transform.Find("_buttonAreaRoot").gameObject;
 
+        this._buttonContinueGame = this.Templates.transform.Find("_buttonContinueGame").gameObject;
+        this._buttonNewGame = this.Templates.transform.Find("_buttonNewGame").gameObject;
+        this._buttonHistoryScreen = this.Templates.transform.Find("_buttonHistoryScreen").gameObject;
 
-        _buttonContinueGamePrefab.GetComponent<Button>().onClick.AddListener(() => {
-            game.gameLoadOrNew(true);
-            SceneManager.LoadScene("PrepareScene");
-        });
-
-        _buttonNewGamePrefab.GetComponent<Button>().onClick.AddListener(() => {
-            game.gameLoadOrNew(false);
-            SceneManager.LoadScene("PrepareScene");
-        });
-
-        _buttonHistorySreenPrefab.GetComponent<Button>().onClick.AddListener(() => {
-            game.gameLoadOrNew(false);
-            SceneManager.LoadScene("HistoryScene");
-        });
+        this.title = this.UiRoot.transform.Find("_title").GetComponent<Image>();
     }
 
     private void initScene2d()
@@ -53,10 +38,22 @@ public class MenuScreen : BaseHundunScreen
 
         if (game.gameHasSave())
         {
-            _buttonAreaRoot.transform.AsTableAdd<GameObject>(_buttonContinueGamePrefab);
+            var buttonContinueGameInstance = _buttonAreaRoot.transform.AsTableAddGameobject(_buttonContinueGame);
+            buttonContinueGameInstance.GetComponent<Button>().onClick.AddListener(() => {
+                game.gameLoadOrNew(true);
+                SceneManager.LoadScene("PrepareScene");
+            });
         }
-        _buttonAreaRoot.transform.AsTableAdd<GameObject>(_buttonNewGamePrefab);
-        _buttonAreaRoot.transform.AsTableAdd<GameObject>(_buttonHistorySreenPrefab);
+        var buttonNewGameInstance = _buttonAreaRoot.transform.AsTableAddGameobject(_buttonNewGame);
+        buttonNewGameInstance.GetComponent<Button>().onClick.AddListener(() => {
+            game.gameLoadOrNew(false);
+            SceneManager.LoadScene("PrepareScene");
+        });
+        var buttonHistoryScreenInstance = _buttonAreaRoot.transform.AsTableAddGameobject(_buttonHistoryScreen);
+        buttonHistoryScreenInstance.GetComponent<Button>().onClick.AddListener(() => {
+            game.gameLoadOrNew(false);
+            SceneManager.LoadScene("HistoryScene");
+        });
     }
 
     override protected void Start()
