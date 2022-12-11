@@ -6,6 +6,7 @@ using UnityEngine;
 public class TextureConfig
 {
     const String BASE_FOLDER = "Quiz-UI/";
+    const String BASE_ADAPTER_FOLDER = "Quiz-Adapter/";
 
     internal static List<Sprite> getAnimationsTextureAtlas(string key)
     {
@@ -14,6 +15,26 @@ public class TextureConfig
         while (true)
         {
             Sprite sprite = Resources.Load<Sprite>(BASE_FOLDER + "playScreenAnimation/" + key + "_" + i);
+            if (sprite != null)
+            {
+                list.Add(sprite);
+                i++;
+            }
+            else
+            {
+                break;
+            }
+        }
+        return list;
+    }
+
+    internal static List<Sprite> getSkillAnimationsTextureAtlas(string key)
+    {
+        List<Sprite> list = new List<Sprite>();
+        int i = 0;
+        while (true)
+        {
+            Sprite sprite = Resources.Load<Sprite>(BASE_ADAPTER_FOLDER + "animations/" + key + "_" + i);
             if (sprite != null)
             {
                 list.Add(sprite);

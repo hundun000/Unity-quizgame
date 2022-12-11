@@ -9,7 +9,7 @@ using static SkillBoardVM;
 
 public class SkillNode : MonoBehaviour
 {
-    static readonly int LENGTH = 160;
+    //static readonly int LENGTH = 160;
 
     Image backgroundImage;
     Text mainLabel;
@@ -21,8 +21,8 @@ public class SkillNode : MonoBehaviour
 
     void Awake()
     {
-        this.backgroundImage = this.transform.Find("_content/_buttonArea").gameObject.GetComponent<Image>();
-        this.mainLabel = this.transform.Find("_content/_mainLabel").gameObject.GetComponent<Text>();
+        this.backgroundImage = this.transform.Find("_content/_buttonArea/_background").gameObject.GetComponent<Image>();
+        this.mainLabel = this.transform.Find("_content/_buttonArea/_mainLabel").gameObject.GetComponent<Text>();
         this.textLabel = this.transform.Find("_content/_textLabel").gameObject.GetComponent<Text>();
         this.selfButton = this.transform.Find("_content/_buttonArea").gameObject.GetComponent<Button>();
     }

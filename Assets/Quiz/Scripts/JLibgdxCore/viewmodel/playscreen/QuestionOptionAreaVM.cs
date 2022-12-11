@@ -8,9 +8,9 @@ using TreeEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using static QuestionOptionAreaVM;
-using UnityEngine.UIElements;
 using System.Linq;
 using hundun.quizlib;
+using UnityEngine.UI;
 
 public class QuestionOptionAreaVM : MonoBehaviour
 {
@@ -37,7 +37,7 @@ public class QuestionOptionAreaVM : MonoBehaviour
         this.optionButtonPrefab = this.transform.Find("_templates/optionButtonPrefab").gameObject;
 
         //setBackground(background);
-
+        this.GetComponent<Image>().enabled = false;
 
         nodes = new List<OptionNode>();
         for (int i = 0; i < SIZE; i++)
@@ -47,11 +47,6 @@ public class QuestionOptionAreaVM : MonoBehaviour
             nodes.Add(vm);
 
         }
-
-    }
-
-    void Start()
-    {
 
     }
 
@@ -81,7 +76,7 @@ public class QuestionOptionAreaVM : MonoBehaviour
 
     public void showRandomOption(int showOptionAmout)
     {
-        List<int> showIndexs = Enumerable.Range(1, SIZE).ToList()
+        List<int> showIndexs = Enumerable.Range(0, SIZE).ToList()
             .Where(index => nodes[index].showState == OptionButtonShowState.HIDE_WRONG)
             .ToList()
             ;

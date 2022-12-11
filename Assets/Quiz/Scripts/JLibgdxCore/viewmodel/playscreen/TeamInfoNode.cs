@@ -9,10 +9,10 @@ using UnityEngine.UI;
 
 public class TeamInfoNode : MonoBehaviour
 {
-    static int SIGN_SIZE = 50;
+    //static int SIGN_SIZE = 50;
     Image signSlotImage;
     Sprite signDrawable;
-    static int NAME_WIDTH = 200;
+    //static int NAME_WIDTH = 200;
     Text teamInfoLabel;
     Text teamInfoLabel2;
 

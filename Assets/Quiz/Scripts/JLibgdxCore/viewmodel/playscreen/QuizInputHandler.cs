@@ -17,18 +17,19 @@ public class QuizInputHandler : MonoBehaviour,
     CountdownClockVM.CallerAndCallback,
     QuestionOptionAreaVM.CallerAndCallback,
     SkillBoardVM.CallerAndCallback,
+    SystemBoardVM.CallerAndCallback,
     IAudioCallback
 {
 
     PlayScreen owner;
 
-    CountdownClockVM countdownClockVM;
-    QuestionStemVM questionStemVM;
-    TeamInfoBoardVM teamInfoBoardVM;
-    SystemBoardVM systemBoardVM;
-    QuestionResourceAreaVM questionResourceAreaVM;
-    QuestionOptionAreaVM questionOptionAreaVM;
-    SkillBoardVM skillBoardVM;
+    internal CountdownClockVM countdownClockVM;
+    internal QuestionStemVM questionStemVM;
+    internal TeamInfoBoardVM teamInfoBoardVM;
+    internal SystemBoardVM systemBoardVM;
+    internal QuestionResourceAreaVM questionResourceAreaVM;
+    internal QuestionOptionAreaVM questionOptionAreaVM;
+    internal SkillBoardVM skillBoardVM;
 
 
     void Awake()
@@ -50,6 +51,7 @@ public class QuizInputHandler : MonoBehaviour,
         countdownClockVM.postPrefabInitialization(owner.game, this, owner.logicFrameHelper);
         questionResourceAreaVM.postPrefabInitialization(game, this);
         skillBoardVM.postPrefabInitialization(this);
+        systemBoardVM.postPrefabInitialization(game, this);
     }
 
         internal void handleCreateAndStartMatch()
@@ -272,6 +274,27 @@ public class QuizInputHandler : MonoBehaviour,
         catch (QuizgameException e)
         {
             LibgdxFeatureExtension.error(this.GetType().Name, "QuizgameException", e);
+        }
+    }
+
+    public void onChooseSystem(SystemButtonType type)
+    {
+        LibgdxFeatureExtension.log(this.GetType().Name, "onChooseSystem called");
+        switch (type)
+        {
+            case SystemButtonType.PAUSE:
+                owner.notificationCallerAndCallback.callShowPauseConfirm();
+                break;
+            case SystemButtonType.EXIT:
+                owner.animationQueueHandler.addAnimationTask((voidIt) => owner.notificationCallerAndCallback.callShowMatchFinishConfirm());
+                owner.animationQueueHandler.afterAllAnimationDoneTask = ((voidIt) => {
+                    handleCurrentTeam(false);
+                    handelExitAsFinishMatch(toHistory());
+                });
+                owner.animationQueueHandler.checkNextAnimation();
+                break;
+            default:
+                break;
         }
     }
 }

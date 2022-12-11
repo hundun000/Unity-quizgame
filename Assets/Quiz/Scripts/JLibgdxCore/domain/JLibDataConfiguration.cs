@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System;
 using hundun.quizlib;
 
-public class JLibDataConfiguration
+public class LibDataConfiguration
 {
 
     public static String ZACA_TEAM_NAME_1 = "砍口垒同好组";
@@ -19,7 +19,7 @@ public class JLibDataConfiguration
     private BuffService buffService;
 
 
-    public JLibDataConfiguration(QuizComponentContext context)
+    public LibDataConfiguration(QuizComponentContext context)
     {
         this.teamService = context.teamService;
         this.roleSkillService = context.roleSkillService;

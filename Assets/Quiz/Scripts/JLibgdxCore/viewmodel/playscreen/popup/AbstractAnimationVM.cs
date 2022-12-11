@@ -79,7 +79,13 @@ public abstract class AbstractAnimationVM : MonoBehaviour
         List<Sprite> drawableArray = TextureConfig.getAnimationsTextureAtlas(id);
         return new GdxAnimation<Sprite>(frameDuration, drawableArray, playMode);
     }
-    
+
+    public static GdxAnimation<Sprite> skillAminationFactory(String id, float frameDuration, PlayMode playMode)
+    {
+        List<Sprite> drawableArray = TextureConfig.getSkillAnimationsTextureAtlas(id);
+        return new GdxAnimation<Sprite>(frameDuration, drawableArray, playMode);
+    }
+
     public GdxAnimation<Sprite> aminationFactoryBySumTime(String id,
             float second, PlayMode playMode)
     {

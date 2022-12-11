@@ -17,12 +17,12 @@ public class QuizLibBridge : IFrontEnd, ISubGameSaveHandler
 {
 
     public QuizComponentContext quizComponentContext { get; private set; }
-    public JLibDataConfiguration libDataConfiguration { get; private set; }
+    public LibDataConfiguration libDataConfiguration { get; private set; }
     public QuizLibBridge(QuizGdxGame game) {
 
         try {
             this.quizComponentContext = QuizComponentContext.Factory.create(this);
-            this.libDataConfiguration = new JLibDataConfiguration(quizComponentContext);
+            this.libDataConfiguration = new LibDataConfiguration(quizComponentContext);
         } catch (QuizgameException e) {
             Debug.LogErrorFormat("[{0}] {1} {2}", this.GetType().Name, "QuizgameException", e);
         }

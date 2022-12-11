@@ -17,7 +17,7 @@ public class PlayScreen : BaseHundunScreen
 
     public GameService quizLib;
     // --- inner class ---
-    public SkillEffectHandler skillEffectHandler = new SkillEffectHandler();
+    public SkillEffectHandler skillEffectHandler;
     public BlockingAnimationQueueHandler animationQueueHandler = new BlockingAnimationQueueHandler();
     public AnimationCallerAndCallbackDelegation animationCallerAndCallback;
     public NotificationCallerAndCallbackDelegation notificationCallerAndCallback;
@@ -39,6 +39,7 @@ public class PlayScreen : BaseHundunScreen
 
         
         this.quizInputHandler = this.UiRoot.transform.Find("_quizInputHandler").GetComponent<QuizInputHandler>();
+        this.skillEffectHandler = this.UiRoot.transform.Find("_skillEffectHandler").GetComponent<SkillEffectHandler>();
 
         this.animationCallerAndCallback = this.transform.Find("_animationCallerAndCallback").GetComponent<AnimationCallerAndCallbackDelegation>();
         this.notificationCallerAndCallback = this.transform.Find("_notificationCallerAndCallbackDelegation").GetComponent<NotificationCallerAndCallbackDelegation>();
@@ -53,8 +54,8 @@ public class PlayScreen : BaseHundunScreen
 
         // FIXME fake
         MatchConfig matchConfig = new MatchConfig();
-        matchConfig.matchStrategyType = MatchStrategyType.PRE;
-        matchConfig.teamNames = new List<string> { JLibDataConfiguration.ZACA_TEAM_NAME_1 };
+        matchConfig.matchStrategyType = MatchStrategyType.MAIN;
+        matchConfig.teamNames = new List<string> { LibDataConfiguration.ZACA_TEAM_NAME_1, LibDataConfiguration.ZACA_TEAM_NAME_2 };
         matchConfig.questionPackageName = QuestionLoaderService.PRELEASE_PACKAGE_NAME;
 
         LibgdxFeatureExtension.SetScreenChangePushParams(new System.Object[] { matchConfig });

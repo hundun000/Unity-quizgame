@@ -6,30 +6,40 @@ using UnityEngine.VFX;
 
 public class AnimationCallerAndCallbackDelegation : MonoBehaviour,
     QuestionResultAnimationVM.CallerAndCallback,
-    GeneralDelayAnimationVM.CallerAndCallback
+    GeneralDelayAnimationVM.CallerAndCallback,
+    TeamSwitchAnimationVM.CallerAndCallback
 {
     // --- runtime add to stage ---
     QuestionResultAnimationVM questionResultAnimationVM;
-    //TeamSwitchAnimationVM teamSwitchAnimationVM;
-    //SkillAnimationVM skillAnimationVM;
+    TeamSwitchAnimationVM teamSwitchAnimationVM;
+    SkillAnimationVM skillAnimationVM;
     GeneralDelayAnimationVM generalDelayAnimationVM;
     PlayScreen owner;
     GameObject _questionResultAnimationVM;
     GameObject _generalDelayAnimationVM;
+    GameObject _teamSwitchAnimationVM;
+    GameObject _skillAnimationVM;
 
     void Awake()
     {
         this.owner = this.GetComponentInParent<PlayScreen>();
         this._questionResultAnimationVM = owner.PopoupRoot.transform.Find("_questionResultAnimationVM").gameObject;
         this._generalDelayAnimationVM = owner.PopoupRoot.transform.Find("_generalDelayAnimationVM").gameObject;
+        this._teamSwitchAnimationVM = owner.PopoupRoot.transform.Find("_teamSwitchAnimationVM").gameObject;
+        this._skillAnimationVM = owner.PopoupRoot.transform.Find("_skillAnimationVM").gameObject;
+
         this.questionResultAnimationVM = _questionResultAnimationVM.GetComponent<QuestionResultAnimationVM>();
         this.generalDelayAnimationVM = _generalDelayAnimationVM.GetComponent<GeneralDelayAnimationVM>();
+        this.teamSwitchAnimationVM = _teamSwitchAnimationVM.GetComponent<TeamSwitchAnimationVM>();
+        this.skillAnimationVM = _skillAnimationVM.GetComponent<SkillAnimationVM>();
     }
 
     void Start()
     {
         questionResultAnimationVM.postPrefabInitialization(owner.game, this);
         generalDelayAnimationVM.postPrefabInitialization(owner.game, this);
+        teamSwitchAnimationVM.postPrefabInitialization(owner.game, this);
+        skillAnimationVM.postPrefabInitialization(owner.game, this);
     }
 
     public void callShowQuestionResultAnimation(AnswerResultEvent answerResultEvent)
@@ -83,13 +93,14 @@ public class AnimationCallerAndCallbackDelegation : MonoBehaviour,
         generalCallShowAnimation(_generalDelayAnimationVM, generalDelayAnimationVM, delaySecond, true);
     }
 
-    internal void callShowTeamSwitchAnimation(SwitchTeamEvent switchTeamEvent)
+    public void callShowTeamSwitchAnimation(SwitchTeamEvent switchTeamEvent)
     {
-        throw new NotImplementedException();
+        generalCallShowAnimation(_teamSwitchAnimationVM, teamSwitchAnimationVM, switchTeamEvent, true);
     }
 
-    internal void callShowSkillAnimation(SkillResultEvent skillResultEvent)
+    public void callShowSkillAnimation(SkillResultEvent skillResultEvent)
     {
-        throw new NotImplementedException();
+        generalCallShowAnimation(_skillAnimationVM, skillAnimationVM, skillResultEvent, true);
     }
+
 }
