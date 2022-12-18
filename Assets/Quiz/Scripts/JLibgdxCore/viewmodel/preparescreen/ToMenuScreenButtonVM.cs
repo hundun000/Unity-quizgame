@@ -3,15 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Device;
 
 public class ToMenuScreenButtonVM : MonoBehaviour
 {
+    PrepareScreen screen;
+    Button button;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        Button button = this.GetComponent<Button>();
+        this.screen = this.GetComponentInParent<PrepareScreen>();
+        this.button = this.GetComponent<Button>();
+
         button.onClick.AddListener(JOnClick);
+        this.GetComponent<Image>().sprite = TextureConfig.getPlayScreenUITextureAtlas_findRegion(TextureAtlasKeys.PLAYSCREEN_EXITBUTTON);
     }
+
 
     // Update is called once per frame
     void Update()
@@ -21,7 +28,8 @@ public class ToMenuScreenButtonVM : MonoBehaviour
 
     public void JOnClick()
     {
-        // TODO temp
+        screen.game.gameSaveCurrent();
+
         SceneManager.LoadScene("MenuScene");
     }
 }

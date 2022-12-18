@@ -8,7 +8,6 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class MatchStrategySelectVM : MonoBehaviour
 {
@@ -38,7 +37,7 @@ public class MatchStrategySelectVM : MonoBehaviour
         //this.slotNumListener = _game.GetComponent<JPrepareScreen>();
         //this._imageComponent.sprite = Resources.Load<Sprite>("Quiz/testNinePatch");
 
-        
+        this.GetComponent<Image>().sprite = TextureConfig.getMyNinePatch();
     }
 
     // Update is called once per frame

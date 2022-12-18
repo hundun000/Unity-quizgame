@@ -26,8 +26,8 @@ public class HistoryScreen : BaseHundunScreen
     HistoryAreaVM historyAreaVM;
 
     Button toNextScreenButton;
-    
 
+    [Serializable]
     public class MatchHistoryDTO
     {
         public Dictionary<String, int> data { get; set; }
@@ -39,11 +39,13 @@ public class HistoryScreen : BaseHundunScreen
 
         this.historyAreaVM = this.UiRoot.transform.Find("_historyAreaVM").GetComponent<HistoryAreaVM>();
         this.toNextScreenButton = this.UiRoot.transform.Find("_toNextScreenButton").GetComponent<Button>();
+        
     }
 
     override protected void Start()
     {
         base.Start();
+        this.GetComponentInChildren<ScreenBackgroundVM>().init(this.GetType().Name);
         game.saveHandler.registerSubHandler(this);
 
         this.histories = new List<MatchHistoryDTO>();

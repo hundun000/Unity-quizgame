@@ -23,6 +23,8 @@ public class MatchStrategyNode : MonoBehaviour
         this._nameLabel = this.transform.Find("_nameLabel").GetComponent<Text>();
         this._signSlotImage = this.transform.Find("_signSlotImage").GetComponent<Image>();
         this.signDrawable = TextureConfig.getPlayScreenUITextureAtlas_findRegion(TextureAtlasKeys.pLAYSCREEN_CURRENTTEAMSIGN_BLACK);
+
+        _signSlotImage.sprite = (signDrawable);
     }
 
     // Update is called once per frame
@@ -47,11 +49,11 @@ public class MatchStrategyNode : MonoBehaviour
     {
         if (isCurrent)
         {
-            _signSlotImage.sprite = (signDrawable);
+            _signSlotImage.enabled = true;
         }
         else
         {
-            _signSlotImage.sprite = (null);
+            _signSlotImage.enabled = false;
         }
     }
 }

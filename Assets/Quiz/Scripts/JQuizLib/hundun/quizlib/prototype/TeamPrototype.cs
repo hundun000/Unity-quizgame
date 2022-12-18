@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 
 namespace hundun.quizlib.prototype
 {
+    [Serializable]
     public class TeamPrototype {
 
 

@@ -77,7 +77,7 @@ public class TeamManageSlotVM : MonoBehaviour
         }
         else
         {
-            GameObject vm = _teamNodeAreaContainer.transform.AsTableAdd<GameObject>(_noTeamLabelPrefab);
+            GameObject vm = _teamNodeAreaContainer.transform.AsTableAddGameobject(_noTeamLabelPrefab);
 
             _modifyTeamButton.enabled = false;
         }

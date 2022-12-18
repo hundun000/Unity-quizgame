@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 
 namespace hundun.quizlib.prototype.skill
 {
+    [Serializable]
     public class AddBuffSkillEffect {
 
         public AddBuffSkillEffect(string buffName, int duration)

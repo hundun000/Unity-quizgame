@@ -32,6 +32,8 @@ public class ToPlayScreenButtonVM : MonoBehaviour
 
     public void JOnClick() 
     {
+        screen.game.gameSaveCurrent();
+
         MatchConfig matchConfig = new MatchConfig();
         matchConfig.teamNames = (screen.selectedTeamNames);
         matchConfig.questionPackageName = (screen.currentQuestionPackageName);

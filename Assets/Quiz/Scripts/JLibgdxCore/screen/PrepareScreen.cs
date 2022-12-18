@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using static MatchStrategySelectVM;
 
 public class PrepareScreen : BaseHundunScreen,
@@ -62,13 +63,12 @@ public class PrepareScreen : BaseHundunScreen,
         matchStrategyInfoVM = _matchStrategyInfoVM.GetComponent<MatchStrategyInfoVM>();
         toPlayScreenButtonVM = _toPlayScreenButtonVM.GetComponent<ToPlayScreenButtonVM>();
         toMenuScreenButtonVM = _toMenuScreenButtonVM.GetComponent<ToMenuScreenButtonVM>();
-
     }
 
     override protected void Start()
     {
         base.Start();
-
+        this.GetComponentInChildren<ScreenBackgroundVM>().init(this.GetType().Name);
         this.teamService = game.quizLibBridge.quizComponentContext.teamService;
         this.questionService = game.quizLibBridge.quizComponentContext.questionService;
 

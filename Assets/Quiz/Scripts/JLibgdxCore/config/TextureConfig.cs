@@ -59,6 +59,28 @@ public class TextureConfig
 
     }
 
+    internal static Sprite getScreenBackground(String typeName)
+    {
+        string atlasKeys;
+        switch (typeName)
+        {
+            case "MenuScreen":
+                atlasKeys = "menuScreen";
+                break;
+            case "PrepareScreen":
+                atlasKeys = "prepareScreen";
+                break;
+            case "HistoryScreen":
+            case "PlayScreen":
+                atlasKeys = "playScreen";
+                break;
+            default:
+                atlasKeys = typeName;
+                break;
+        }
+        return Resources.Load<Sprite>(BASE_FOLDER + "screens/" + atlasKeys);
+    }
+
     internal static Sprite getMyNinePatch()
     {
         return Resources.Load<Sprite>(BASE_ADAPTER_FOLDER + "myNinePatch");

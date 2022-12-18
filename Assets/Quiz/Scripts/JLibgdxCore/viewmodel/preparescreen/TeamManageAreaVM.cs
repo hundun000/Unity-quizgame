@@ -42,17 +42,11 @@ public class TeamManageAreaVM : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        
+        this.GetComponent<Image>().sprite = TextureConfig.getMyNinePatch();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public interface ICallerAndCallback
     {

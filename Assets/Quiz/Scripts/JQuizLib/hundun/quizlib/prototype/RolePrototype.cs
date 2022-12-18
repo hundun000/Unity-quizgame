@@ -6,6 +6,7 @@ using hundun.quizlib.prototype.skill;
 
 namespace hundun.quizlib.prototype
 {
+    [Serializable]
     public class RolePrototype {
         
         [JsonProperty]

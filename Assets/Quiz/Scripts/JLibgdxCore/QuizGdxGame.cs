@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -49,15 +50,14 @@ public class QuizGdxGame : BaseHundunGame<QuizRootSaveData>
 
         QuizRootSaveData ISaveTool<QuizRootSaveData>.readRootSaveData()
         {
-            QuizRootSaveData data = new QuizRootSaveData();
             string json = ReadFromFIle(fileName);
-            JsonUtility.FromJsonOverwrite(json, data);
+            QuizRootSaveData data = JsonConvert.DeserializeObject<QuizRootSaveData>(json);
             return data;
         }
 
         void ISaveTool<QuizRootSaveData>.writeRootSaveData(QuizRootSaveData saveData)
         {
-            string json = JsonUtility.ToJson(saveData);
+            string json = JsonConvert.SerializeObject(saveData, Formatting.Indented);
             WriteToFile(fileName, json);
         }
 

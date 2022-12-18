@@ -25,7 +25,7 @@ public static class LibgdxFeatureExtension
         T vm = vmInstance.GetComponent<T>();
         if (vm == null)
         {
-            throw new Exception("vmInstance.GetComponent<T> is null, maybe forget add Component");
+            throw new Exception("vmInstance.GetComponent<T> is null, maybe forget add Component, prefab.name = " + prefab.name);
         }
         return vm;
     }

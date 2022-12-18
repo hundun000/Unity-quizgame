@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -14,7 +15,6 @@ public class MenuScreen : BaseHundunScreen
     GameObject _buttonContinueGame;
     GameObject _buttonNewGame;
     GameObject _buttonHistoryScreen;
-
     // ------ unity adapter member ------
     protected GameObject _buttonAreaRoot;
 
@@ -33,6 +33,7 @@ public class MenuScreen : BaseHundunScreen
 
     private void initScene2d()
     {
+        title.sprite = TextureConfig.getScreenBackground("menuIcon");
 
         _buttonAreaRoot.transform.AsTableClear();
 
@@ -59,7 +60,7 @@ public class MenuScreen : BaseHundunScreen
     override protected void Start()
     {
         base.Start();
-
+        this.GetComponentInChildren<ScreenBackgroundVM>().init(this.GetType().Name);
         initScene2d();
     }
 }

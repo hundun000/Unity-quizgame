@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using static HistoryScreen;
 
+[Serializable]
 public class QuizRootSaveData
 {
 
@@ -19,12 +20,14 @@ public class QuizRootSaveData
         this.systemSetting = systemSetting;
     }
 
+    [Serializable]
     public class MyGameSaveData
     {
         public List<TeamPrototype> teamPrototypes;
         public List<MatchHistoryDTO> matchFinishHistories;
     }
 
+    [Serializable]
     public class SystemSetting
     {
         public String env;

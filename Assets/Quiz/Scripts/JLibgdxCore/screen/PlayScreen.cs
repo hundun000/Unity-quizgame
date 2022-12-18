@@ -11,6 +11,7 @@ using hundun.quizlib.exception;
 using hundun.quizlib.prototype.@event;
 using Unity.VisualScripting;
 using UnityEngine.Device;
+using UnityEngine.UI;
 
 public class PlayScreen : BaseHundunScreen
 {
@@ -48,7 +49,7 @@ public class PlayScreen : BaseHundunScreen
     override protected void Start()
     {
         base.Start();
-
+        this.GetComponentInChildren<ScreenBackgroundVM>().init(this.GetType().Name);
         this.quizLib = game.quizLibBridge.quizComponentContext.gameService;
         this.logicFrameHelper = new LogicFrameHelper(QuizGdxGame.LOGIC_FRAME_PER_SECOND);
 
