@@ -59,12 +59,17 @@ public class TeamManageAreaVM : MonoBehaviour
         this.operatingSlotVM = teamSlotVM;
     }
 
-    internal List<String> updateWaitChangeDone(TeamPrototype teamPrototype)
+    public List<String> getSelectedTeamNames()
     {
-        this.operatingSlotVM.updateData(teamPrototype);
         return teamSlotVMs
             .Where(it => it.data != null)
             .Select(it => it.data.name)
             .ToList();
+    }
+
+    internal List<String> updateWaitChangeDone(TeamPrototype teamPrototype)
+    {
+        this.operatingSlotVM.updateData(teamPrototype);
+        return getSelectedTeamNames();
     }
 }

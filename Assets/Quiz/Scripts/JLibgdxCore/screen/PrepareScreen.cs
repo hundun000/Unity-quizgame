@@ -123,7 +123,7 @@ public class PrepareScreen : BaseHundunScreen,
         _teamSelectPopoupVM.SetActive(true);
 
         // --- logic ---
-        teamSelectPopoupVM.callShow(teamService.listTeams());
+        teamSelectPopoupVM.callShow(teamService.listTeams(), teamManageAreaVM.getSelectedTeamNames());
     }
 
     void TeamSelectPopoupVM.IWaitTeamSelectCallback.onTeamSelectDone(TeamPrototype currenTeamPrototype)

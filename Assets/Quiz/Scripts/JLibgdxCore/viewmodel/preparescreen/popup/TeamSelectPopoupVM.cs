@@ -52,9 +52,10 @@ public class TeamSelectPopoupVM : AbstractSelectPopoupVM<TeamNodeVM>
         void onTeamSelectDone(TeamPrototype teamPrototype);
     }
 
-    public void callShow(List<TeamPrototype> teamPrototypes)
+    public void callShow(List<TeamPrototype> teamPrototypes, List<string> selectedTeamNames)
     {
         var candidateVMsAndCandidateVMInstances = teamPrototypes
+            .Where(teamPrototype => !selectedTeamNames.Contains(teamPrototype.name))
             .Select(teamPrototype =>
             {
                 GameObject vmInstance = Instantiate(candidateVMPrefab, new Vector3(0, 0, 0), Quaternion.identity);

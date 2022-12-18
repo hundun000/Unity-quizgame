@@ -23,7 +23,7 @@ public abstract class AbstractAnimationVM : MonoBehaviour
     Image background;
     
 
-    void Awake()
+    virtual protected void Awake()
     {
         this.background = this.transform.Find("_background").GetComponent<Image>();
         
