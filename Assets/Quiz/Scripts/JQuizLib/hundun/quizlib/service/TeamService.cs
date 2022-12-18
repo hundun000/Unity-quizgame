@@ -13,7 +13,7 @@ namespace hundun.quizlib.service
 
         RoleSkillService roleSkillService;
 
-  
+
         public void postConstruct(QuizComponentContext context)
         {
             this.roleSkillService = context.roleSkillService;

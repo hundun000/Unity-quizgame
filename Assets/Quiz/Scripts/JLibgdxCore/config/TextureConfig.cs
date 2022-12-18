@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class TextureConfig
 {
+    public static String DEFAULT_ENV = "pro";
     const String BASE_FOLDER = "Quiz-UI/";
     const String BASE_ADAPTER_FOLDER = "Quiz-Adapter/";
 

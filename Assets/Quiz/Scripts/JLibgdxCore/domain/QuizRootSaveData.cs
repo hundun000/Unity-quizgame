@@ -9,6 +9,16 @@ public class QuizRootSaveData
     public MyGameSaveData gameSaveData;
     public SystemSetting systemSetting;
 
+    public QuizRootSaveData()
+    {
+    }
+
+    public QuizRootSaveData(MyGameSaveData gameSaveData, SystemSetting systemSetting)
+    {
+        this.gameSaveData = gameSaveData;
+        this.systemSetting = systemSetting;
+    }
+
     public class MyGameSaveData
     {
         public List<TeamPrototype> teamPrototypes;
@@ -17,7 +27,7 @@ public class QuizRootSaveData
 
     public class SystemSetting
     {
-        
+        public String env;
     }
 
     public class Factory
@@ -31,6 +41,7 @@ public class QuizRootSaveData
             myGameSaveData.matchFinishHistories = (new List<MatchHistoryDTO>());
             result.gameSaveData = myGameSaveData;
             var systemSetting = new SystemSetting();
+            systemSetting.env = TextureConfig.DEFAULT_ENV;
             result.systemSetting = systemSetting;
 
             return result;

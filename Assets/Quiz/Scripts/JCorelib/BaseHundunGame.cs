@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
- public abstract class BaseHundunGame<T_SAVE> : MonoBehaviour
+public abstract class BaseHundunGame<T_SAVE>
 {
 
     protected ISaveTool<T_SAVE> saveTool;
@@ -10,6 +10,11 @@ using UnityEngine;
     // ------ init in createStage1(), or keep null ------
     public BaseViewModelContext modelContext;
     public AbstractSaveHandler<T_SAVE> saveHandler;
+
+    public BaseHundunGame(ISaveTool<T_SAVE> saveTool)
+    {
+        this.saveTool = saveTool;
+    }
 
     protected abstract void createStage1();
     protected abstract void createStage3();

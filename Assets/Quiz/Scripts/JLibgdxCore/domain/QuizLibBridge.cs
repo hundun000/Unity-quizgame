@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using static QuizRootSaveData;
-using static JQuizSaveHandler;
+using static QuizSaveHandler;
 
 public class QuizLibBridge : IFrontEnd, ISubGameSaveHandler
 {

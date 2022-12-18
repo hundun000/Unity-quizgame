@@ -7,11 +7,21 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static QuizRootSaveData;
+using static QuizSaveHandler;
 
 public class HistoryScreen : BaseHundunScreen
 {
 
-    List<MatchHistoryDTO> histories { get; set; }
+    List<MatchHistoryDTO> histories { 
+        get
+        {
+            return game.historyScreenAsSubGameSaveHandlerDelegation.histories;
+        } 
+        set{
+            game.historyScreenAsSubGameSaveHandlerDelegation.histories = value;
+        }
+    }
 
     HistoryAreaVM historyAreaVM;
 
@@ -34,6 +44,7 @@ public class HistoryScreen : BaseHundunScreen
     override protected void Start()
     {
         base.Start();
+        game.saveHandler.registerSubHandler(this);
 
         this.histories = new List<MatchHistoryDTO>();
         toNextScreenButton.onClick.AddListener(() =>
@@ -41,20 +52,16 @@ public class HistoryScreen : BaseHundunScreen
             SceneManager.LoadScene("MenuScene");
         });
 
-        // FIXME fake as first screen
-        game.gameLoadOrNew(false);
-        MatchHistoryDTO matchHistoryDTO = new MatchHistoryDTO();
-        matchHistoryDTO.data = new Dictionary<String, int>();
-        matchHistoryDTO.data.Add(LibDataConfiguration.ZACA_TEAM_NAME_1, 114);
-        matchHistoryDTO.data.Add(LibDataConfiguration.ZACA_TEAM_NAME_2, 514);
-        LibgdxFeatureExtension.SetScreenChangePushParams(new object[] { matchHistoryDTO });
+        if (LibgdxFeatureExtension.GetScreenChangePushParams() != null)
+        {
+            MatchHistoryDTO newHistory = (MatchHistoryDTO)LibgdxFeatureExtension.GetScreenChangePushParams()[0];
+            LibgdxFeatureExtension.log(this.GetType().Name, String.Format(
+                    "pushParams by newHistory = {0}",
+                    newHistory.ToString()
+                    ));
+            addNewHistory(newHistory);
+        }
 
-        MatchHistoryDTO newHistory = (MatchHistoryDTO)LibgdxFeatureExtension.GetScreenChangePushParams()[0];
-        LibgdxFeatureExtension.log(this.GetType().Name, String.Format(
-                "pushParams by newHistory = {0}",
-                newHistory.ToString()
-                ));
-        addNewHistory(newHistory);
 
         
 
@@ -69,4 +76,6 @@ public class HistoryScreen : BaseHundunScreen
     {
         histories.Add(history);
     }
+
+
 }

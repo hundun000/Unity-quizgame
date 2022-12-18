@@ -1,10 +1,9 @@
-public class JQuizViewModelContext : BaseViewModelContext {
+public class QuizViewModelContext : BaseViewModelContext {
 
     QuizGdxGame game;
     
-    public JQuizViewModelContext(QuizGdxGame game) {
+    public QuizViewModelContext(QuizGdxGame game) {
         this.game = game;
-        
     }
 
 

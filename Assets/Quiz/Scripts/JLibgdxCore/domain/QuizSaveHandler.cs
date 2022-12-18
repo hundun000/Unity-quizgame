@@ -3,7 +3,7 @@ using System;
 using static QuizRootSaveData;
 using UnityEngine;
 
-public class JQuizSaveHandler : AbstractSaveHandler<QuizRootSaveData>
+public class QuizSaveHandler : AbstractSaveHandler<QuizRootSaveData>
 {
 
     bool gameSaveInited = false;
@@ -31,8 +31,31 @@ public class JQuizSaveHandler : AbstractSaveHandler<QuizRootSaveData>
 
     public override QuizRootSaveData currentSituationToSaveData()
     {
-        // FIXEM
-        return null;
+        MyGameSaveData myGameSaveData;
+        if (gameSaveInited)
+        {
+            myGameSaveData = new MyGameSaveData();
+            subGameSaveHandlers.ForEach(it => it.currentSituationToSaveData(myGameSaveData));
+        }
+        else
+        {
+            myGameSaveData = null;
+        }
+
+        SystemSetting systemSetting;
+        if (systemSettingInited)
+        {
+            systemSetting = new SystemSetting();
+            subSystemSettingHandlers.ForEach(it => it.currentSituationToSystemSetting(systemSetting));
+        }
+        else
+        {
+            systemSetting = null;
+        }
+        return new QuizRootSaveData(
+                myGameSaveData,
+                systemSetting
+                );
     }
 
     public override QuizRootSaveData genereateNewGameSaveData()
