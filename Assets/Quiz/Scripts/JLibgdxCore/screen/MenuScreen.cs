@@ -24,9 +24,9 @@ public class MenuScreen : BaseHundunScreen
 
         this._buttonAreaRoot = this.UiRoot.transform.Find("_buttonAreaRoot").gameObject;
 
-        this._buttonContinueGame = this.Templates.transform.Find("_buttonContinueGame").gameObject;
-        this._buttonNewGame = this.Templates.transform.Find("_buttonNewGame").gameObject;
-        this._buttonHistoryScreen = this.Templates.transform.Find("_buttonHistoryScreen").gameObject;
+        this._buttonContinueGame = this.Templates.transform.Find("_buttonAreaRootTest/_buttonContinueGameCell").gameObject;
+        this._buttonNewGame = this.Templates.transform.Find("_buttonAreaRootTest/_buttonNewGameCell").gameObject;
+        this._buttonHistoryScreen = this.Templates.transform.Find("_buttonAreaRootTest/_buttonHistoryScreenCell").gameObject;
 
         this.title = this.UiRoot.transform.Find("_title").GetComponent<Image>();
     }
@@ -39,18 +39,18 @@ public class MenuScreen : BaseHundunScreen
         if (game.gameHasSave())
         {
             var buttonContinueGameInstance = _buttonAreaRoot.transform.AsTableAddGameobject(_buttonContinueGame);
-            buttonContinueGameInstance.GetComponent<Button>().onClick.AddListener(() => {
+            buttonContinueGameInstance.GetComponentInChildren<Button>().onClick.AddListener(() => {
                 game.gameLoadOrNew(true);
                 SceneManager.LoadScene("PrepareScene");
             });
         }
         var buttonNewGameInstance = _buttonAreaRoot.transform.AsTableAddGameobject(_buttonNewGame);
-        buttonNewGameInstance.GetComponent<Button>().onClick.AddListener(() => {
+        buttonNewGameInstance.GetComponentInChildren<Button>().onClick.AddListener(() => {
             game.gameLoadOrNew(false);
             SceneManager.LoadScene("PrepareScene");
         });
         var buttonHistoryScreenInstance = _buttonAreaRoot.transform.AsTableAddGameobject(_buttonHistoryScreen);
-        buttonHistoryScreenInstance.GetComponent<Button>().onClick.AddListener(() => {
+        buttonHistoryScreenInstance.GetComponentInChildren<Button>().onClick.AddListener(() => {
             game.gameLoadOrNew(false);
             SceneManager.LoadScene("HistoryScene");
         });
